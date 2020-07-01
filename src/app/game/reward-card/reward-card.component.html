@@ -1,0 +1,7 @@
+<div [ngClass]="reward.status" class="container">
+  <h2>{{reward.title}}</h2>
+  <p>{{reward.description}}</p>
+
+  <button *ngIf="editable" (click)="acceptMission()">Pick this one!</button>
+  <p>{{reward.status}}</p>
+</div>

@@ -1,0 +1,23 @@
+<div *ngIf="loading"><h1>loading game...</h1></div>
+
+<button (click)="newGame()" *ngIf="!matchService.match.currentGame">Start New Game</button>
+
+<div *ngIf="matchService.match.currentGame">
+  <button *ngIf="!matchService.match.currentGame.playerOneReady" [disabled]="!readyToStart()" (click)="startGame()">Start Game</button>
+  <p *ngIf="matchService.match.currentGame.status === 'pending' && matchService.match.currentGame.playerOneReady">Waiting for your partner to start.</p>
+  <p *ngIf="matchService.match.currentGame.status === 'pending' && !matchService.match.currentGame.playerOneReady">Your partner is waiting for you!</p>
+  <p *ngIf="matchService.match.currentGame.status === 'in progress'" >Game in progress!</p>
+  <a routerLink="/Home">Home</a>
+  <h1>Your game with {{matchService.getMatch().opponent.firstName}}</h1>
+  <h3>Game Ends: {{matchService.match.currentGame.endOfGame | date}}</h3>
+  <h2>Hand</h2>
+  <button *ngIf="!matchService.match.currentGame.playerOneReady" (click)="acceptAll()">Accept all missions!</button>
+  <p *ngIf="matchService.match.currentGame.status !== 'in progress' && !matchService.match.currentGame.playerOneReady">Accept or Reject as many as you want! You will not replace the ones you reject, but you won't lose points for not completing them at the end of the week.</p>
+  <app-mission-card *ngFor="let card of matchService.match.currentGame.playerOneHand; let i = index" [card]="card" [editable]="!matchService.match.currentGame.playerOneReady" (cardStatusUpdated)="updateMissionStatus($event, i)"></app-mission-card>
+
+  <h2>Rewards</h2>
+  <p *ngIf="matchService.match.currentGame.status !== 'in progress' && !matchService.match.currentGame.playerOneReady">You can only pick one of these, so choose carefully!</p>
+  <app-reward-card *ngFor="let reward of matchService.match.currentGame.playerOneRewards; let i = index" [reward]="reward" [editable]="!matchService.match.currentGame.playerOneReady" (rewardStatusUpdated)="updateRewardStatus($event, i)"></app-reward-card>
+
+  <a href="/Guess">Make a guess!</a>
+</div>

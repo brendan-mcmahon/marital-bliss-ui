@@ -1,0 +1,11 @@
+<div [ngClass]="card.status" class="container">
+  <h2>{{card.title}}</h2>
+  <p>{{card.description}}</p>
+  <h3>{{card.browniepoint}}</h3>
+  <p>Points: {{card.pointvalue}}</p>
+
+  <button *ngIf="card.status === 'incomplete'" (click)="completeMission()">Completed</button>
+  <button *ngIf="card.status === 'complete'" (click)="completeBrowniePoint()">Completed Brownie Point too!</button>
+  <button *ngIf="editable" (click)="rejectMission()">Reject</button>
+  <button *ngIf="editable" (click)="acceptMission()">Accept</button>
+</div>

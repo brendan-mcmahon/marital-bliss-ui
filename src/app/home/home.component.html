@@ -1,0 +1,25 @@
+<h1>Marital Bliss</h1>
+
+<button (click)="logout()">Log Out</button>
+
+<h2> My Matches </h2>
+<div *ngFor="let match of matches">
+  <button (click)="goToGame(match)">Your match against {{match.opponent.firstName}}</button>
+  <!-- <button *ngIf="!match.currentGame" (click)="addNewGame(match.id)">Start a new game with {{match.opponent.firstName}}!</button> -->
+</div>
+
+<button (click)="openSearch()">Start a Match with another person</button>
+
+<div class="userSearch" *ngIf="showUserSearch">
+  <input (keyup)="search()" type="text" [(ngModel)]="searchTerms" />
+
+  <div *ngFor="let player of allUsersDisplay">
+    {{player.firstName}} {{player.lastName}} <button (click)="startMatch(player.email)">Start a Match!</button>
+  </div>
+</div>
+
+<h2>My Rewards</h2>
+
+<!-- <a routerLink="/MyPrizes">My Prizes</a> -->
+
+<!-- <a routerLink="/OpponentPrizes">{{match.opponent.name}}'s Prizes</a> -->

@@ -1,0 +1,25 @@
+<h1 *ngIf="win">You won!</h1>
+<h1 *ngIf="!win">You lost!</h1>
+<a routerLink="/Home">Home</a>
+
+<div class="card-container">
+  <div class="player-one-cards">
+    <h2>{{matchService.match.player.firstName}}'s Cards</h2>
+    <div *ngFor="let card of matchService.match.currentGame.playerOneHand">
+      {{card.title}}
+      {{card.pointvalue}}
+      {{card.status}}</div>
+    </div>
+    <h3>{{playerOnePoints}}</h3>
+
+    <h2>{{matchService.match.opponent.firstName}}'s Cards</h2>
+    <div class="player-two-cards">
+      <div *ngFor="let card of matchService.match.currentGame.playerTwoHand">
+        {{card.title}}
+        {{card.pointvalue}}
+        {{card.status}}</div>
+      </div>
+    <h3>{{playerTwoPoints}}</h3>
+</div>
+
+<button (click)="startNewGame()">Start a new Round!</button>

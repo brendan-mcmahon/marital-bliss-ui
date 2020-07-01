@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --ssl --ssl-key C:\\Users\\Brendan.McMahon\\code\\marital-bliss-ui\\localhost.key --ssl-cert C:\\Users\\Brendan.McMahon\\code\\marital-bliss-ui\\localhost.crt",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -18,8 +18,11 @@
     "@angular/forms": "~7.2.0",
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
+    "@angular/pwa": "^0.12.4",
     "@angular/router": "~7.2.0",
+    "@angular/service-worker": "~7.2.0",
     "core-js": "^2.5.4",
+    "moment": "^2.26.0",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"

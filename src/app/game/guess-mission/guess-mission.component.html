@@ -1,0 +1,10 @@
+<h2>What mission do you think {{matchService.getMatch().opponent.firstName}} has?</h2>
+<h3 *ngIf="selectedMission">{{selectedMission.title}}</h3>
+<h4 *ngIf="selectedMission">{{selectedMission.description}}</h4>
+
+<button (click)="guess()" [disabled]="!selectedMission">Guess!</button>
+
+<input type="text" [(ngModel)]="filterText" (keyup)="filter()">
+<div class='mission' *ngFor="let mission of deckDisplay" (click)="missionSelected(mission)">
+  {{mission.title}}
+</div>

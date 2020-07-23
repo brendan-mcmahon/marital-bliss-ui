@@ -1,7 +1,19 @@
-<div [ngClass]="reward.status" class="container">
-  <h2>{{reward.title}}</h2>
-  <p>{{reward.description}}</p>
+<div [ngClass]="reward.status" class="card-container">
+  <div class="card-header">
+    <h4>{{reward.title}}</h4>
+  </div>
+  <div class="card-body">
+    <div class="image"></div>
+    <div class="card-body-inner">
+      <div class="description">
+        <h4>Your Reward:</h4>
+        <p>{{reward.description}}</p>
+        <!-- <p>{{reward.status}}</p> -->
+      </div>
+    </div>
+  <!-- <hr /> -->
 
-  <button *ngIf="editable" (click)="acceptMission()">Pick this one!</button>
-  <p>{{reward.status}}</p>
+  <button class="btn-primary" *ngIf="reward.status === 'pending' || reward.status === 'rejected'" (click)="chooseReward()">Pick this one!</button>
+  <button class="btn-primary" *ngIf="reward.status === 'undelivered'" (click)="complete()">Accept delivery</button>
+</div>
 </div>

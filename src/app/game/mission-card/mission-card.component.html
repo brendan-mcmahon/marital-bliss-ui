@@ -1,11 +1,42 @@
-<div [ngClass]="card.status" class="container">
-  <h2>{{card.title}}</h2>
-  <p>{{card.description}}</p>
-  <h3>{{card.browniepoint}}</h3>
-  <p>Points: {{card.pointvalue}}</p>
+<div [ngClass]="card.status" class="card-container">
+  <div class="card-header">
+    <h4>{{card.title}}</h4>
+    <div class="points">
+      <p class="number">
+        {{card.pointvalue}}
+      </p>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="image">
 
-  <button *ngIf="card.status === 'incomplete'" (click)="completeMission()">Completed</button>
-  <button *ngIf="card.status === 'complete'" (click)="completeBrowniePoint()">Completed Brownie Point too!</button>
-  <button *ngIf="editable" (click)="rejectMission()">Reject</button>
-  <button *ngIf="editable" (click)="acceptMission()">Accept</button>
+    </div>
+
+    <div class="card-body-inner">
+
+      <div class="description">
+        <h4>Your Mission:</h4>
+        <p>{{card.description}}</p>
+      </div>
+
+      <!-- <hr /> -->
+
+      <div class="brownie-point">
+        <h4>Brownie Point:</h4>
+        <p>{{card.browniepoint}}</p>
+      </div>
+    </div>
+
+    <!-- <hr /> -->
+
+    <div class="button-group">
+      <button class="btn-primary" *ngIf="card.status === 'incomplete'" (click)="completeMission()">Complete</button>
+      <button class="btn-primary" *ngIf="card.status === 'complete'" (click)="completeBrowniePoint()">Complete Brownie Point too!</button>
+    </div>
+
+    <div *ngIf="editable" class="button-group">
+      <button class="btn-secondary" [ngClass]="rejectButtonStyle" (click)="rejectMission()">Reject</button>
+      <button class="btn-primary" [ngClass]="acceptButtonStyle"  (click)="acceptMission()">Accept</button>
+    </div>
+  </div>
 </div>

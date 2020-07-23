@@ -19,55 +19,68 @@ export class EndgameComponent implements OnInit {
 
   ngOnInit() {
 
-    this.apiService.getMatch(this.matchService.getMatch().id)
-      .subscribe(match => {
-        this.matchService.setMatch(match);
-      });
+    // this.apiService.getMatch(this.matchService.getMatch().id)
+    //   .subscribe(match => {
+    //     this.matchService.setMatch(match);
+    //   });
 
-    if (this.matchService.getGame().endOfGame !== null) {
-      if (this.getTimeRemaining() > 0) {
-            this.router.navigate([`Game`]);
-      }
-    }
+    this.apiService.getMostRecentGame(this.matchService.getMatch().id)
+      .subscribe(game => {
+        this.matchService.setGame(game);
 
-    this.playerOnePoints = this.getPoints(this.matchService.getGame().playerOneHand);
+        if (this.matchService.getGame().endOfGame === null || this.getTimeRemaining() > 0) {
+              this.router.navigate([`Game`]);
+        }
 
-    this.playerTwoPoints = this.getPoints(this.matchService.getGame().playerTwoHand);
+        console.log('calculating points');
+        this.playerOnePoints = this.getPoints(this.matchService.getGame().playerOneHand);
+        this.playerTwoPoints = this.getPoints(this.matchService.getGame().playerTwoHand);
 
-    this.apiService.getGuessedMissions(this.matchService.getGame().id)
-      .subscribe(guesses => {
-        guesses.filter(g => g.userId === this.matchService.getMatch().player.id).forEach(guess => {
-          this.playerOnePoints -= 1;
+        this.apiService.getGuessedMissions(this.matchService.getGame().id)
+        .subscribe(guesses => {
+          guesses.filter(g => g.userId === this.matchService.getMatch().player.id).forEach(guess => {
+
+            this.playerOnePoints -= 1;
+          });
+
+          guesses.filter(g => g.userId === this.matchService.getMatch().opponent.id).forEach(guess => {
+            this.playerTwoPoints -= 1;
+          });
+
+          this.win = this.playerOnePoints > this.playerTwoPoints || this.playerOnePoints === this.playerTwoPoints;
+
+          if (this.matchService.getMatch().currentGame.status !== 'finished') {
+          // need to check this on the server side to make sure we're not making data changes on an already finished game
+            this.apiService.endGame(this.matchService.getGame().id,
+              this.win ? this.matchService.getMatch().player.id : this.matchService.getMatch().opponent.id)
+              .subscribe(g => this.matchService.setGame(g));
+          }
         });
-
-        guesses.filter(g => g.userId === this.matchService.getMatch().opponent.id).forEach(guess => {
-          this.playerTwoPoints -= 1;
-        });
-      });
-
-    this.win = this.playerOnePoints > this.playerTwoPoints || this.playerOnePoints === this.playerTwoPoints;
-
-    if (this.matchService.getMatch().currentGame.status !== 'finished') {
-      // need to check this on the server side to make sure we're not making data changes on an already finished game
-      this.apiService.endGame(this.matchService.getGame().id,
-        this.win ? this.matchService.getMatch().player.id : this.matchService.getMatch().opponent.id)
-        .subscribe(g => this.matchService.setGame(g));
-      }
+    });
   }
 
   private getPoints(cards: Card[]): number {
-    return cards.reduce((accumulator, currentCard) => {
+    const reduced = cards.reduce((accumulator, currentCard) => {
       switch (currentCard.status) {
         case 'complete':
-              return accumulator + currentCard.pointvalue;
+          console.log(`${currentCard.title} completed +${currentCard.pointvalue}`);
+          return accumulator + currentCard.pointvalue;
         case 'brownie-complete':
-              return accumulator + currentCard.pointvalue + currentCard.browniepointvalue;
+          console.log(`${currentCard.title} brownie completed +${currentCard.pointvalue + currentCard.browniepointvalue}`);
+          return accumulator + currentCard.pointvalue + currentCard.browniepointvalue;
         case 'incomplete' :
-              return accumulator - currentCard.pointvalue;
+          console.log(`${currentCard.title} completed -${currentCard.pointvalue}`);
+          return accumulator - currentCard.pointvalue;
+        case 'guessed' :
+          console.log(`${currentCard.title} completed +0`);
+          return accumulator;
         default:
+          console.log('something went wrong');
           return accumulator;
       }
     }, 0);
+    console.log(reduced);
+    return reduced;
   }
 
   startNewGame() {

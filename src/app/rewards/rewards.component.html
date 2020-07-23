@@ -1,0 +1,7 @@
+<h1>My Rewards</h1>
+<app-reward-card [editable]="false" *ngFor="let card of playerCards" [reward]="card">
+</app-reward-card>
+
+<h1>{{matchService.getOpponent().firstName}}'s Rewards</h1>
+<app-reward-card [editable]="false" *ngFor="let card of opponentCards" [reward]="card">
+</app-reward-card>

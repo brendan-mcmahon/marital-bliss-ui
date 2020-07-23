@@ -1,1 +1,120 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./app/scss/pure-drawer.scss";
+@import "./Skeleton/css/normalize.css";
+@import "./Skeleton/css/skeleton.css";
+@import "./app/variables.scss";
+
+@font-face {
+  font-family: header;
+  // src: url("../assets/fonts/AdvertisingScriptBold.ttf");
+  src: url("./assets/fonts/AdvertisingScriptBold.ttf");
+  // src: url("/assets/fonts/CherryCreamSoda.ttf");
+  // src: url("/assets/fonts/Cookie-Regular.ttf");
+}
+
+@font-face {
+  font-family: small-header;
+  /* src: url("/assets/fonts/AtomicAge-Regular.ttf"); */
+  src: url("./assets/fonts/CherryCreamSoda.ttf");
+  // src: url("/assets/fonts/AtomicAge-Regular.ttf");
+  // src: url("/assets/fonts/Cookie-Regular.ttf");
+}
+
+
+.pure-toggle-label {
+  background-color: $pale-yellow;
+}
+
+h1, h2 {
+  font-family: small-header;
+  // text-shadow: 0px 0px 15px rgba(0,0,0,1);
+}
+
+h3, h4 {
+  font-family: small-header;
+}
+
+body {
+  // background-color: $blue;
+  color: white;
+  // color: #EFEBE0;
+  background-image: radial-gradient($dark-blue 15%, transparent 15%),
+      radial-gradient($dark-blue 15%, transparent 15%);
+  background-color: $blue;
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+}
+
+hr {
+  border-color: $dark-red;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+/* Sections
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.section {
+  padding: 3em 1em 3em;
+  text-align: center;
+}
+.section-heading,
+.section-description {
+  margin-bottom: 1.2rem;
+}
+
+button {
+  border: none;
+  -webkit-box-shadow: 0px 11px 11px 0px rgba(0,0,0,0.34);
+  -moz-box-shadow: 0px 11px 11px 0px rgba(0,0,0,0.34);
+  box-shadow: 0px 11px 11px 0px rgba(0,0,0,0.34);
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    color: grey;background: none;
+    border-color: darkslategrey;
+    background-color: lightgrey;
+    // background: linear-gradient(145deg, #a4a4a4, #8a8a8a);
+    box-shadow: inset 5px 5px 10px #8e8e8e,
+              inset -5px -5px 10px #a4a4a4;
+  }
+}
+
+.btn-secondary {
+  background-color: $red;
+  color: $pale-yellow;
+  background: linear-gradient(145deg, #e53e2b, #c13424);
+  &:focus, &:hover {
+    color: $pale-yellow;
+  }
+  &:active {
+    box-shadow: inset 13px 13px 26px #691c14,
+                inset -13px -13px 26px #ff583c;
+  }
+}
+
+.btn-primary {
+  border: solid rgb(63, 146, 145) 2px;
+  border: none;
+  background-color: $blue;
+  color: $dark-blue;
+  background: linear-gradient(145deg, #90e6e5, #7ac2c1);
+  color: white;
+  &:focus, &:hover {
+    color: white;
+  }
+  &:active {
+    box-shadow: inset 13px 13px 26px #426969,
+                inset -13px -13px 26px #ccffff;
+  }
+}
+
+.depressed-primary {
+  box-shadow: inset 7px 7px 14px #649f9e,
+              inset -7px -7px 14px #aaffff;
+}
+
+.depressed-secondary {
+  box-shadow: inset 7px 7px 14px #9e2b1e,
+              inset -7px -7px 14px #ff4932;
+}

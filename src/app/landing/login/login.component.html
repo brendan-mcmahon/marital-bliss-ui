@@ -2,6 +2,8 @@
   <h1>Login</h1>
   <form (ngSubmit)="login()" #registrationForm="ngForm">
 
+    <p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
+
     <div class="form-group">
       <label for="model.email">Email</label>
       <input type="text" class="form-control" id="email" name="email" [(ngModel)]="model.email" required>
@@ -12,8 +14,10 @@
       <input type="password" class="form-control" id="password" name="password" [(ngModel)]="model.password" required>
     </div>
 
-    <button type="submit">Submit</button>
-
-
+    <div class="buttons">
+      <button class="btn-primary" type="submit">Login</button>
+      <!-- Should this be a link instead of a button?-->
+      <button class="btn-secondary" type="button" (click)="emitCancel()">Go to Registration</button>
+    </div>
   </form>
 </div>

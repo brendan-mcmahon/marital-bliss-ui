@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { GameComponent } from './game/game.component';
-import { PrizesComponent } from './prizes/prizes.component';
+import { RewardsComponent } from './rewards/rewards.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './landing/login/login.component';
@@ -18,13 +18,14 @@ import { MissionCardComponent } from './game/mission-card/mission-card.component
 import { RewardCardComponent } from './game/reward-card/reward-card.component';
 import { EndgameComponent } from './game/endgame/endgame.component';
 import { GuessMissionComponent } from './game/guess-mission/guess-mission.component';
+import { CountdownComponent } from './game/countdown/countdown.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     GameComponent,
-    PrizesComponent,
+    RewardsComponent,
     LoginComponent,
     LandingComponent,
     RegisterComponent,
@@ -32,6 +33,7 @@ import { GuessMissionComponent } from './game/guess-mission/guess-mission.compon
     RewardCardComponent,
     EndgameComponent,
     GuessMissionComponent,
+    CountdownComponent,
   ],
   imports: [
     BrowserModule,

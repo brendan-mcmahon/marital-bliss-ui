@@ -4,7 +4,7 @@
 
 <div class="card-container">
   <div class="player-one-cards">
-    <h2>{{matchService.match.player.firstName}}'s Cards</h2>
+    <h2>{{matchService.getMatch().player.firstName}}'s Cards</h2>
     <div *ngFor="let card of matchService.match.currentGame.playerOneHand">
       {{card.title}}
       {{card.pointvalue}}
@@ -12,7 +12,7 @@
     </div>
     <h3>{{playerOnePoints}}</h3>
 
-    <h2>{{matchService.match.opponent.firstName}}'s Cards</h2>
+    <h2>{{matchService.getMatch().opponent.firstName}}'s Cards</h2>
     <div class="player-two-cards">
       <div *ngFor="let card of matchService.match.currentGame.playerTwoHand">
         {{card.title}}
@@ -22,4 +22,4 @@
     <h3>{{playerTwoPoints}}</h3>
 </div>
 
-<button (click)="startNewGame()">Start a new Round!</button>
+<button class="btn-secondary" (click)="startNewGame()">Start a new Round!</button>

@@ -1,11 +1,10 @@
-.pending {
-  background-color: yellow;
+@import "../../variables.scss";
+
+.incomplete {
 }
 
-.rejected {
-  background-color: red;
-}
-
-.accepted {
-  background-color: greenyellow;
-}
+// .card-header {
+//   background-color: $blue;
+//   color: $dark-blue;
+//   border-bottom: 3px solid $dark-blue;
+// }

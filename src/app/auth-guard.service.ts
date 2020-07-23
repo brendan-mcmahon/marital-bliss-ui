@@ -10,7 +10,7 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(): boolean {
     if (!localStorage.getItem('id_token')) {
-      this.router.navigate(['']);
+      this.router.navigate(['Game']);
       return false;
     }
     return true;

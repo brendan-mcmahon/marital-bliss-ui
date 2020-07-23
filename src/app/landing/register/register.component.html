@@ -27,7 +27,10 @@
       <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" [(ngModel)]="model.confirmPassword" required>
     </div>
 
-    <button type="submit">Submit</button>
+    <div class="buttons">
+      <button class="btn-primary" type="submit">Register</button>
+      <button class="btn-secondary" type="button" (click)="emitCancel()">I already have an account</button>
+    </div>
 
 
   </form>

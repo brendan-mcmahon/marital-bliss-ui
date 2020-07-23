@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Prize as Reward } from 'src/app/models/prize';
+import { Reward } from 'src/app/models/reward';
 import { ApiService } from 'src/app/api.service';
 
 @Component({
   selector: 'app-reward-card',
   templateUrl: './reward-card.component.html',
-  styleUrls: ['./reward-card.component.scss']
+  styleUrls: ['../card.scss', './reward-card.component.scss']
 })
 export class RewardCardComponent implements OnInit {
 
@@ -21,16 +21,12 @@ export class RewardCardComponent implements OnInit {
   }
 
   complete() {
-    this.apiService.updateCardStatus(this.reward.id, 'complete')
+    console.log(`reward id: ${this.reward.id}`);
+    this.apiService.updateRewardStatus(this.reward.id, 'delivered')
       .subscribe(newStatus => this.reward.status = newStatus.status);
   }
 
-  rejectMission() {
-    this.rewardStatusUpdated.emit(false);
-  }
-
-  acceptMission() {
+  chooseReward() {
     this.rewardStatusUpdated.emit(true);
   }
-
 }

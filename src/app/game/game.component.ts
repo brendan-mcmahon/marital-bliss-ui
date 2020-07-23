@@ -17,19 +17,19 @@ export class GameComponent implements OnInit {
   constructor(public matchService: MatchService, private router: Router, private apiService: ApiService) { }
 
   ngOnInit() {
-      this.apiService.getMostRecentGame(this.matchService.getMatch().id)
-        .subscribe(g => {
-          this.loading = false;
-          if (g) {
-            this.matchService.setGame(g);
-            if (this.matchService.getGame().endOfGame !== null) {
-              this.timeRemaining = this.getTimeRemaining();
-              if (this.timeRemaining <= 0) {
-                    this.router.navigate([`EndGame`]);
-              }
+    this.apiService.getMostRecentGame(this.matchService.getMatch().id)
+      .subscribe(g => {
+        this.loading = false;
+        if (g) {
+          this.matchService.setGame(g);
+          if (this.matchService.getGame().endOfGame !== null) {
+            this.timeRemaining = this.getTimeRemaining();
+            if (this.timeRemaining <= 0) {
+                  this.router.navigate([`EndGame`]);
             }
           }
-        });
+        }
+      });
   }
 
   acceptAll() {
@@ -46,7 +46,7 @@ export class GameComponent implements OnInit {
     this.matchService.getGame().playerOneHand[index].status = isAccepted ? 'accepted' : 'rejected';
   }
 
-  updateRewardStatus(isAccepted: boolean, index: number) {
+  updateRewardStatus(index: number) {
     this.matchService.getGame().playerOneRewards.forEach(r => r.status = 'rejected');
     this.matchService.getGame().playerOneRewards[index].status = 'accepted';
   }
@@ -86,5 +86,4 @@ export class GameComponent implements OnInit {
         this.matchService.setGame(g);
       });
   }
-
 }

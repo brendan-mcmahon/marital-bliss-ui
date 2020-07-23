@@ -1,5 +1,5 @@
 import { Card } from './card';
-import { Prize } from './prize';
+import { Reward } from './reward';
 import { Guess } from './guess';
 
 export class Game {
@@ -10,8 +10,8 @@ export class Game {
   playerTwoReady: boolean;
   playerOneHand: Card[];
   playerTwoHand: Card[];
-  playerOneRewards: Prize[];
-  playerTwoRewards: Prize[];
+  playerOneRewards: Reward[];
+  playerTwoRewards: Reward[];
   playerOneGuesses: Guess[];
   playerTwoGuesses: Guess[];
 }

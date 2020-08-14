@@ -1,7 +1,4 @@
-<div *ngIf="!showLogin && !showRegistration" class="button-group">
-  <button class="btn-primary" (click)="showLogin=true; showRegistration=false;">Log In</button>
-  <button class="btn-secondary" (click)="showLogin=false; showRegistration=true;">Register</button>
+<div class="landing-container">
+  <app-login *ngIf="showLogin" (cancel)="toggleAction($event)"></app-login>
+  <app-register *ngIf="showRegistration" (cancel)="toggleAction($event)"></app-register>
 </div>
-
-<app-login *ngIf="showLogin" (cancel)="toggleAction($event)"></app-login>
-<app-register *ngIf="showRegistration" (cancel)="toggleAction($event)"></app-register>

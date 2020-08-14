@@ -1,44 +1,5 @@
+<app-menu *ngIf="loggedIn"></app-menu>
 
-<div class="pure-container" data-effect="pure-effect-slide">
-  <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left">
-  <label *ngIf="showMenuButton" class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left">
-      <span class="pure-toggle-icon"></span>
-  </label>
-
-  <div class="pure-drawer" data-position="left">
-    <div class="drawer-container">
-      <div class="action-group game-actions">
-        <ul>
-          <!-- <li><a href="/Game">Game vs. {{matchService.getOpponent().firstName}}</a></li> -->
-          <li><a href="/Guess">Make a Guess</a></li>
-          <li><a href="/Rewards">Rewards</a></li>
-        </ul>
-      </div>
-
-      <div class="action-group player-actions">
-        <ul>
-          <li><a href="/Home">Go to different match</a></li>
-          <li><p (click)="logout()">Log Out</p></li>
-        </ul>
-      </div>
-
-      <div class="action-group misc-actions">
-        <ul>
-          <li><a href="/BugReport">Report a Bug</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="pure-pusher-container">
-      <div class="pure-pusher">
-        <router-outlet></router-outlet>
-      </div>
-  </div>
-  <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
-</div>
-
-<!-- <button *ngIf="!showBugReportInput" (click)="showBugReportInput = true">Create a Bug Report</button>
-<div *ngIf="showBugReportInput">
-  <input type="text" [(ngModel)]="bugReport">
-  <button (click)="submitBugReport()">Submit Bug Report</button>
-</div> -->
+<!-- ngIf this on getMatch()? -->
+<router-outlet></router-outlet>
+<app-footer class="footer"></app-footer>

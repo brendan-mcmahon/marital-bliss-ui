@@ -1,0 +1,68 @@
+<!-- <div class="section">
+  <div class="page-header">
+    <h2>Notifications</h2>
+  </div>
+
+  <p class="count" *ngIf="notifications">
+    You have {{ notifications.length }} unanswered notifications
+  </p>
+
+  <div *ngIf="notifications && notifications.length > 0" class="mb-list">
+    <div
+      class="mb-list-item test-notification-text"
+      (click)="openNotification(n)"
+      *ngFor="let n of notifications"
+    >
+      <div class="notification-indicator">
+        <fa-icon [icon]="getIcon(n)"></fa-icon>
+      </div>
+      <div class="notification-body">
+        <p class="notification-name">
+          {{
+            n.status === "pending-approval" || n.status === "info"
+              ? n.requester
+              : n.approver
+          }}
+        </p>
+        <p class="notification-text">{{ n.subject }}</p>
+      </div>
+      <p class="notification-time">{{ n.createdOn | date: "MMM  d" }}</p>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="section">
+  <div class="page-header">
+    <h2>Notifications</h2>
+  </div>
+
+  <p class="count" *ngIf="notifications">
+    You have {{ notifications.length }} unanswered notifications
+  </p>
+
+  <div *ngIf="notifications && notifications.length > 0" class="mb-list">
+    <div
+      class="mb-list-item test-notification-text"
+      (click)="openNotification(n)"
+      *ngFor="let n of notifications"
+    >
+      <div class="notification-indicator">
+        <fa-icon [icon]="getIcon(n)"></fa-icon>
+      </div>
+      <div class="notification-body">
+        <div class="notification-header">
+          <p class="notification-name">
+            {{
+              n.status === "pending-approval" || n.status === "info"
+                ? n.requester
+                : n.approver
+            }}
+          </p>
+          <p class="notification-time">{{ n.createdOn | date: "MMM  d" }}</p>
+        </div>
+        <p class="notification-text">{{ n.subject }}</p>
+      </div>
+    </div>
+  </div>
+</div>

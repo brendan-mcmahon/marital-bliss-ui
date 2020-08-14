@@ -1,10 +1,25 @@
-<h2>What mission do you think {{matchService.getMatch().opponent.firstName}} has?</h2>
-<h3 *ngIf="selectedMission">{{selectedMission.title}}</h3>
-<h4 *ngIf="selectedMission">{{selectedMission.description}}</h4>
 
-<button class="btn-secondary" (click)="guess()" [disabled]="!selectedMission">Guess!</button>
+<div class="section">
+  <div class="page-header">
+    <h2>Choose a mission to guess</h2>
+  </div>
 
-<input type="text" [(ngModel)]="filterText" (keyup)="filter()">
-<div class='mission' *ngFor="let mission of deckDisplay" (click)="missionSelected(mission)">
-  {{mission.title}}
+  <div class="card-placeholder wrong" *ngIf="selectedMission && guessStatus && guessStatus === 'incorrect'">Sorry, {{matchService.getMatch().opponent.firstName}} does <span>not</span> have {{selectedMission.title}}!</div>
+  <div class="card-placeholder wrong" *ngIf="selectedMission && guessStatus && guessStatus === 'correct'">You nailed it! {{matchService.getMatch().opponent.firstName}} <span>does</span> have {{selectedMission.title}}!</div>
+
+  <div *ngIf="guessEnabled" class="filters"><div class="search-field">
+  <input placeholder="Type to filter" type="text" [(ngModel)]="filterText" (keyup)="filter()">
+  </div></div>
+
+  <div class="sub-header" *ngIf="!guessEnabled">
+    <h4>Wait!</h4>
+    <p>You have to wait for the game to start in order to make your guesses!</p>
+  </div>
+
+  <div *ngIf="guessEnabled && deckDisplay && deckDisplay.length > 0" class="mb-list">
+    <div class='mb-list-item' *ngFor="let mission of deckDisplay" (click)="missionSelected(mission)">
+      {{mission.title}}
+    </div>
+  </div>
+
 </div>

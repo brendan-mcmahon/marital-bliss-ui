@@ -1,0 +1,70 @@
+<div *ngIf="!hasMatch" class="page-header" (click)="toggleMenu()">
+  <!-- <app-matches></app-matches> -->
+  <h1 *ngIf="matchService.getPlayer()">{{ matchService.getPlayer().firstName }}</h1>
+  <h1 *ngIf="!matchService.getPlayer()">loading...</h1>
+  <fa-icon [icon]="hamburger"></fa-icon>
+  <!-- <button class="mb-btn-secondary" (click)="logout()">log out</button> -->
+</div>
+
+<div *ngIf="hasMatch" class="page-header" (click)="toggleMenu()">
+  <h1>
+    {{ matchService.getPlayer().firstName }} vs.
+    {{ matchService.getOpponent().firstName }}
+  </h1>
+  <fa-icon [icon]="hamburger"></fa-icon>
+</div>
+
+<!-- <div [ngStyle]="{ width: getMenuWidth() }" class="menu-body"> -->
+<div [ngStyle]="{ height: getMenuWidth() }" class="menu-body">
+  <div class="menu-header">
+    <h3>Menu</h3>
+    <button (click)="toggleMenu()"><fa-icon [icon]="close"></fa-icon></button>
+  </div>
+
+  <div class="menu-items">
+    <div class="menu-item" [ngStyle]="{ 'padding-bottom': showMatches ? '8px' : '0px' }">
+      <div (click)="toggleShowMatches()" class="action-item" [ngStyle]="{ 'border-radius': showMatches ? '8px 8px 0px 0px' : '8px' }">
+        <!-- <img src="../../assets/icons/people-icon.svg" alt="people" /> -->
+        <fa-icon [icon]="people"></fa-icon>
+        <p>Matches</p>
+        <fa-icon class="chevron" *ngIf="!showMatches" [icon]="chevronDown"></fa-icon>
+        <fa-icon class="chevron"  *ngIf="showMatches" [icon]="chevronUp"></fa-icon>
+      </div>
+      <app-matches (gameSelected)="toggleMenu()" *ngIf="showMatches"></app-matches>
+    </div>
+
+    <div class="menu-item" [ngStyle]="{ 'padding-bottom': showAccount ? '8px' : '0px' }">
+      <div (click)="toggleShowAccount()" class="action-item" [ngStyle]="{ 'border-radius': showAccount ? '8px 8px 0px 0px' : '8px' }">
+        <!-- <img src="../../assets/icons/person-icon.svg" alt="person" /> -->
+        <fa-icon [icon]="person"></fa-icon>
+        <p>Account</p>
+        <fa-icon class="chevron"  *ngIf="!showAccount" [icon]="chevronDown"></fa-icon>
+        <fa-icon class="chevron"  *ngIf="showAccount" [icon]="chevronUp"></fa-icon>
+      </div>
+      <app-account *ngIf="showAccount"></app-account>
+    </div>
+
+    <div class="menu-item">
+      <div class="action-item" (click)="navigateTo('Notifications')">
+        <!-- <img src="../../assets/icons/bell-icon.svg" alt="bell" /> -->
+        <fa-icon [icon]="bell"></fa-icon>
+        <p>Notifications</p>
+        <fa-icon class="chevron"  [icon]="chevronRight"></fa-icon>
+      </div>
+    </div>
+
+    <div class="menu-item" [ngStyle]="{ 'padding-bottom': showBugReport ? '8px' : '0px' }">
+      <div (click)="toggleShowBugReport()" class="action-item" [ngStyle]="{ 'border-radius': showBugReport ? '8px 8px 0px 0px' : '8px' }">
+        <!-- <img src="../../assets/icons/person-icon.svg" alt="person" /> -->
+        <fa-icon [icon]="bug"></fa-icon>
+        <p>Report a Bug</p>
+        <fa-icon class="chevron"  *ngIf="!showBugReport" [icon]="chevronDown"></fa-icon>
+        <fa-icon class="chevron"  *ngIf="showBugReport" [icon]="chevronUp"></fa-icon>
+      </div>
+      <app-bug-report *ngIf="showBugReport"></app-bug-report>
+    </div>
+
+    <button class="mb-btn-secondary" (click)="logout()">log out</button>
+
+  </div>
+</div>

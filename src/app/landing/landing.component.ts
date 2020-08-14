@@ -11,8 +11,8 @@ import { MatchService } from '../match.service';
 })
 export class LandingComponent implements OnInit {
 
-  showLogin = false;
-  showRegistration = true;
+  showLogin = true;
+  showRegistration = false;
 
   constructor(
     private router: Router,

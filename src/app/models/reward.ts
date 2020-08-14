@@ -4,4 +4,5 @@ export class Reward {
   description: string;
   status: string;
   playerId: number;
+  deliveryDate: Date;
 }

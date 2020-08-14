@@ -1,0 +1,26 @@
+<div class="page-header">
+  <div (click)="showDeck = !showDeck" class="deck-title">
+    <h2>Rewards</h2>
+    <fa-icon [icon]="chevronDown" *ngIf="!showDeck"></fa-icon><fa-icon [icon]="chevronUp" *ngIf="showDeck"></fa-icon>
+  </div>
+
+  <div *ngIf="showDeck" class="filters">
+    <div class="search-field">
+      <input placeholder="Type to filter" type="text" [(ngModel)]="filterText" (keyup)="filterDisplay()">
+    </div>
+
+    <div class="checkbox-container">
+      <label class="checkbox-label">
+          <input (change)="toggleShowRemoved()" type="checkbox">
+          <span class="checkbox-custom rectangular"></span>
+      </label>
+      <div class="input-title">Show removed rewards</div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showDeck && deckDisplay && deckDisplay.length > 0" class="mb-list">
+  <div class='mb-list-item' *ngFor="let reward of deckDisplay" (click)="rewardSelected(reward)">
+    {{reward.title}}
+  </div>
+</div>

@@ -1,0 +1,19 @@
+.mb-list {
+  background-color: $dark-blue;
+  border-radius: 8px;
+  border: solid $darkest-blue 2px;
+  margin: 8px 16px;
+  padding: 0px 8px;
+  // padding-top: 0px;
+  .mb-list-item {
+    padding: 12px 8px;
+    border-bottom: solid $darkest-blue 1px;
+    font-size: 1.1em;
+  }
+  .mb-list-item-selected {
+    background-color: $darkest-blue;
+  }
+  :last-child {
+    border: none;
+  }
+}

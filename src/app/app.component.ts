@@ -12,28 +12,21 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'marital-bliss-ui';
 
-  showBugReportInput = false;
-  bugReport: string;
-  showMenuButton = true;
+  loggedIn = false;
 
   constructor(
-    private matchService: MatchService,
+    public matchService: MatchService,
     private apiService: ApiService,
     private authService: AuthService,
-    private router: Router){}
+    private router: Router) { }
 
   ngOnInit(): void {
-    console.log(this.authService.isLoggedIn());
-    // this.showMenuButton = this.authService.isLoggedIn();
-  }
-
-  submitBugReport() {
-    this.apiService.submitBugReport(this.bugReport)
-      .subscribe(r => {
-        console.log(JSON.stringify(r));
-        this.showBugReportInput = false;
-        this.bugReport = '';
-      });
+    this.authService.isLoggedIn$.subscribe(i => this.loggedIn = i);
+    this.apiService.getAllMatches().subscribe(m => {
+      console.log('getting all matches...');
+      // console.log(JSON.stringify(m));
+      this.matchService.setMatches(m);
+    });
   }
 
   logout() {

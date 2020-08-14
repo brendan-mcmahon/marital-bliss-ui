@@ -1,4 +1,4 @@
-<div class="container">
+<div class="clock-container">
 <h4>Time Remaining:</h4>
 <div class="clock" *ngIf="clock">
   <div class="segment">
@@ -21,4 +21,5 @@
     <span>{{clock.seconds}}</span>
   </div>
 </div>
+<button [disabled]="!enableEndGameButton" class="mb-btn-secondary" (click)="endGame()">{{ !enableEndGameButton ? 'End Game Request submitted' : 'End Game Early' }}</button>
 </div>

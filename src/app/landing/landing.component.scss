@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 .button-group {
   margin-top: 50%;
   display: flex;
@@ -10,4 +12,49 @@
     font-size: 1.2em;
     margin-bottom: 32px;
   }
+}
+
+.landing-container {
+  margin: 16px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  border-radius: 8px;
+  border: solid $dark-red 2px;
+  background-color: $pale-yellow;
+  color: $dark-red;
+  form {
+    .form-group {
+      label {
+        text-align: left;
+        padding-left: 8px;
+      }
+      input {
+        width: 100%;
+        font-size: 1em;
+      }
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-content: space-between;
+  button {
+    margin-bottom: 24px;
+    height: 48px;
+  }
+}
+
+.error-message {
+  color: red;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  border: solid red 1px;
 }

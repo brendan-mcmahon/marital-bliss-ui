@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
 import { MatchService } from '../match.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { AlertComponent } from '../alert/alert.component';
 
 @Component({
   selector: 'app-game',
@@ -13,23 +15,54 @@ export class GameComponent implements OnInit {
   displayStatus = 'new';
   timeRemaining: number;
   loading = true;
+  bsModalRef: BsModalRef;
 
-  constructor(public matchService: MatchService, private router: Router, private apiService: ApiService) { }
+  constructor(
+    public matchService: MatchService,
+    private router: Router,
+    private apiService: ApiService,
+    private modalService: BsModalService) { }
 
   ngOnInit() {
+
+    this.matchService.matchUpdate$.subscribe(m => {
+      this.getMostRecentGame();
+    });
+
+    // What do we do if there is no match now?!
+    if (this.matchService.getMatch() === null) {
+      // show a static message I guess?
+    } else {
+      this.getMostRecentGame();
+    }
+  }
+
+  private getMostRecentGame() {
     this.apiService.getMostRecentGame(this.matchService.getMatch().id)
       .subscribe(g => {
+        // console.log(JSON.stringify(g));
         this.loading = false;
         if (g) {
           this.matchService.setGame(g);
           if (this.matchService.getGame().endOfGame !== null) {
             this.timeRemaining = this.getTimeRemaining();
             if (this.timeRemaining <= 0) {
-                  this.router.navigate([`EndGame`]);
+              console.log('This game is already over, redirecting to EndGame');
+              this.router.navigate([`EndGame`]);
             }
           }
         }
       });
+  }
+
+  openAlert(text: string) {
+    const initialState = {
+      text
+    };
+    this.bsModalRef = this.modalService.show(AlertComponent, {initialState});
+    this.bsModalRef.content.closeTrigger.subscribe((value: any) => {
+      this.bsModalRef.hide();
+    });
   }
 
   acceptAll() {
@@ -84,6 +117,17 @@ export class GameComponent implements OnInit {
     this.apiService.addGame(this.matchService.getMatch().id)
       .subscribe(g => {
         this.matchService.setGame(g);
+      });
+  }
+
+  endGame() {
+    this.apiService.requestEdit('game', this.matchService.getMatch().id, this.matchService.getGame().id, 'end', null)
+      .subscribe(g => {
+        console.log(g);
+        this.openAlert(`A request has been sent to ${this.matchService.getOpponent().firstName} to end the game early!`);
+        // confirmation popup saying the notification has been sent?
+        // this.matchService.setGame(g);
+        // this.router.navigate(['EndGame']);
       });
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Reward } from 'src/app/models/reward';
 import { ApiService } from 'src/app/api.service';
+import { MatchService } from 'src/app/match.service';
 
 @Component({
   selector: 'app-reward-card',
@@ -10,23 +11,45 @@ import { ApiService } from 'src/app/api.service';
 export class RewardCardComponent implements OnInit {
 
   @Input() reward: Reward;
-  @Input() editable: boolean;
+  @Input() buttonPhase: string;
   @Output() rewardStatusUpdated = new EventEmitter<boolean>();
   statusStyle = 'pending';
+  buttonStyle: string;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private matchService: MatchService, private apiService: ApiService) { }
 
   ngOnInit() {
     this.statusStyle = this.reward.status;
   }
 
   complete() {
-    console.log(`reward id: ${this.reward.id}`);
     this.apiService.updateRewardStatus(this.reward.id, 'delivered')
-      .subscribe(newStatus => this.reward.status = newStatus.status);
+      .subscribe(response => {
+        this.reward.status = response.status;
+        this.reward.deliveryDate = response.deliverydate;
+      });
   }
 
   chooseReward() {
+    this.buttonStyle = 'depressed-primary';
     this.rewardStatusUpdated.emit(true);
+  }
+
+  editReward() {
+
+  }
+
+  disableReward() {
+    this.apiService.requestEdit('reward', this.matchService.getMatch().id, this.reward.id, 'disable', 'disabled')
+      .subscribe(r => {
+        this.rewardStatusUpdated.emit(false);
+      });
+  }
+
+  enableReward() {
+    this.apiService.requestEdit('reward', this.matchService.getMatch().id, this.reward.id, 'enable', 'enabled')
+      .subscribe(r => {
+        this.rewardStatusUpdated.emit(false);
+      });
   }
 }

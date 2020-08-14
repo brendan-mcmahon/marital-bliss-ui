@@ -1,0 +1,55 @@
+@import "../../../variables.scss";
+
+.container {
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.mission-title {
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 1.1em;
+}
+
+.correct {
+  background-color: green;
+  div {
+    .mission-title {
+      background-color: darkgreen;
+    }
+  }
+}
+
+.incorrect {
+  background-color: $red;
+  div {
+    .mission-title {
+      background-color: $dark-red;
+    }
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  font-size: 1.1em;
+  .mission-title {
+    padding: 8px;
+    background-color: darkgreen;
+  }
+}
+
+.close-button {
+  height: 40px;
+  width: 40px;
+  font-size: 3em;
+  color: white;
+  background: none;
+  display: flex;
+  justify-content: center;
+  background-color: $red;
+}

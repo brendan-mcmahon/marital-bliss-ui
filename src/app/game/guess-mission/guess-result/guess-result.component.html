@@ -1,0 +1,24 @@
+<div [class.correct]="correct" [class.incorrect]="!correct"  class="container">
+  <div class="modal-header">
+    <h4 *ngIf="correct" class="modal-title pull-left">Nice!</h4>
+    <h4 *ngIf="!correct" class="modal-title pull-left">Oh no!</h4>
+    <button type="button" class="mb-btn-secondary close-button" aria-label="Close" (click)="close()"><span>&times;</span></button>
+  </div>
+  <div *ngIf="correct"  class="modal-body">
+    <div>
+      <p>
+        You caught {{opponentName}} attempting:
+      </p>
+      <p class="mission-title">{{missionTitle}}</p>
+    </div>
+  </div>
+  <div *ngIf="!correct"  class="modal-body">
+    <p>
+      {{opponentName}} didn't have the mission:
+    </p>
+    <p class="mission-title">
+      {{missionTitle}}
+    </p>
+  </div>
+
+</div>

@@ -8,9 +8,8 @@
     </div>
   </div>
   <div class="card-body">
-    <div class="image">
 
-    </div>
+    <!-- <div class="image"></div> -->
 
     <div class="card-body-inner">
 
@@ -29,14 +28,31 @@
 
     <!-- <hr /> -->
 
-    <div class="button-group">
-      <button class="btn-primary" *ngIf="card.status === 'incomplete'" (click)="completeMission()">Complete</button>
-      <button class="btn-primary" *ngIf="card.status === 'complete'" (click)="completeBrowniePoint()">Complete Brownie Point too!</button>
+    <div *ngIf="buttonPhase === 'play'"  class="update-times">
+      <p class="update-time" *ngIf="card.status === 'complete' && card.updatedate">Completed on: {{card.updatedate | date}}</p>
+      <p class="update-time" *ngIf="card.status === 'brownie-complete' && card.updatedate">Brownie Point completed on: {{card.updatedate | date}}</p>
+      <p class="update-time" *ngIf="card.status === 'guessed' && card.updatedate">Guessed on: {{card.updatedate | date}}</p>
     </div>
 
-    <div *ngIf="editable" class="button-group">
-      <button class="btn-secondary" [ngClass]="rejectButtonStyle" (click)="rejectMission()">Reject</button>
-      <button class="btn-primary" [ngClass]="acceptButtonStyle"  (click)="acceptMission()">Accept</button>
+    <div *ngIf="buttonPhase === 'play'" class="button-group">
+      <button class="mb-btn-primary" *ngIf="card.status === 'incomplete'" (click)="completeMission()">Complete</button>
+      <button class="mb-btn-primary" *ngIf="card.status === 'complete'" (click)="completeBrowniePoint()">Complete Brownie Point too!</button>
     </div>
+
+    <div *ngIf="buttonPhase === 'pending'" class="button-group">
+      <button class="mb-btn-secondary" [ngClass]="rejectButtonStyle" (click)="rejectMission()">Reject</button>
+      <button class="mb-btn-primary" [ngClass]="acceptButtonStyle"  (click)="acceptMission()">Accept</button>
+    </div>
+
+    <div class="button-group" *ngIf="buttonPhase === 'guess'">
+      <button class="mb-btn-primary" (click)="guess()">Guess</button>
+    </div>
+
+    <div *ngIf="buttonPhase === 'edit'" class="button-group">
+      <button class="btn-tertiary" [ngClass]="rejectButtonStyle" (click)="editMission()">Edit</button>
+      <button *ngIf="card.status === 'enabled'" class="mb-btn-secondary" [ngClass]="acceptButtonStyle"  (click)="disableMission()">Remove</button>
+      <button *ngIf="card.status === 'disabled'" class="mb-btn-primary" [ngClass]="acceptButtonStyle"  (click)="enableMission()">Add</button>
+    </div>
+
   </div>
 </div>

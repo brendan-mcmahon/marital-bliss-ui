@@ -1,0 +1,75 @@
+@import "../variables.scss";
+
+.count {
+  background-color: $pale-yellow;
+  color: $dark-red;
+  margin: 16px;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+
+.notification-text {
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .notification-icon {
+    height: 16px;
+    width:16px;
+    background-color: white;
+  }
+  span {
+    margin-right: 8px;
+  }
+
+}
+
+.notification-indicator {
+  align-self: flex-start;
+  margin-right:8px;
+  margin-top: 4px;
+}
+
+.test-notification-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .notification-time {
+    margin: 0;
+    font-size: .8em;
+    min-width: 50px;
+    background: $darkest-blue;
+    border-radius: 16px;
+    padding: 4px 8px;
+  }
+  .notification-body {
+    text-align: left;
+    width: 100%;
+    .notification-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .notification-name {
+      font-size: 1.2em;
+      margin: 0;
+      font-weight: bolder;
+    }
+    .notification-text {
+      font-size: .9em;
+      margin: 0;
+    }
+  }
+}
+
+
+.search-field {
+  display: flex;
+  justify-content: space-between;
+  input {
+    width: 100%;
+    color: black;
+    margin: 12px;
+  }
+}

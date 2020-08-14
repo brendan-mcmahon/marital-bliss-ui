@@ -1,0 +1,21 @@
+<div class="page-header">
+  <div (click)="showRewards = !showRewards" class="reward-header">
+    <h2>{{name}} Rewards</h2>
+    <fa-icon *ngIf="showRewards" [icon]="chevronUp"></fa-icon>
+    <fa-icon *ngIf="!showRewards" [icon]="chevronDown"></fa-icon>
+  </div>
+
+  <div *ngIf="showRewards" class="checkbox-container">
+    <label class="checkbox-label">
+        <input (change)="toggleShowDelivered()" type="checkbox">
+        <span class="checkbox-custom rectangular"></span>
+    </label>
+    <div class="input-title">Show delivered rewards</div>
+  </div>
+
+</div>
+<div *ngIf="showRewards">
+  <p class="static-message" *ngIf="cards && cards.length === 0">You don't have any rewards!</p>
+  <app-reward-card [buttonPhase]="buttonPhase" *ngFor="let card of cardsDisplay" [reward]="card">
+  </app-reward-card>
+</div>

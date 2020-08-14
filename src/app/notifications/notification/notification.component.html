@@ -1,0 +1,34 @@
+<div class="notification-container">
+
+  <div class="modal-header">
+    <div class="modal-title pull-left">
+      <h4>{{notification.body}}</h4>
+      <p class="notification-date">{{notification.createdOn | date}}</p>
+    </div>
+    <button type="button" class="mb-btn-secondary close-button" aria-label="Close" (click)="close()"><span>&times;</span></button>
+  </div>
+
+  <div class="modal-body">
+
+    <div>
+      <p *ngIf="stage === 'approve'" >
+        Do you accept?
+      </p>
+      <app-mission-card *ngIf="mission" [card]="mission" [buttonPhase]="'approve'"></app-mission-card>
+      <app-reward-card *ngIf="reward" [reward]="reward" [buttonPhase]="'approve'"></app-reward-card>
+
+      <div *ngIf="stage === 'approve'" class="button-group">
+        <button type="button" class="mb-btn-primary accept-button" (click)="accept()">Accept</button>
+        <button type="button" class="mb-btn-secondary deny-button" (click)="reject()">Decline</button>
+      </div>
+
+
+      <div *ngIf="stage === 'acknowledge'" class="button-group">
+        <button type="button" class="mb-btn-primary accept-button" (click)="acknowledge()">Ok</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -3,6 +3,7 @@ import { MatchService } from '../../match.service';
 import { Card } from 'src/app/models/card';
 import { ApiService } from 'src/app/api.service';
 import { Router } from '@angular/router';
+import { EndGameSummary } from 'src/app/models/EndGameSummary';
 
 @Component({
   selector: 'app-endgame',
@@ -11,83 +12,49 @@ import { Router } from '@angular/router';
 })
 export class EndgameComponent implements OnInit {
 
+  loading = true;
   win: boolean;
-  playerOnePoints: number;
-  playerTwoPoints: number;
+  summary: EndGameSummary;
 
   constructor(private apiService: ApiService, public matchService: MatchService, private router: Router) { }
 
   ngOnInit() {
-
-    // this.apiService.getMatch(this.matchService.getMatch().id)
-    //   .subscribe(match => {
-    //     this.matchService.setMatch(match);
-    //   });
-
     this.apiService.getMostRecentGame(this.matchService.getMatch().id)
       .subscribe(game => {
         this.matchService.setGame(game);
 
         if (this.matchService.getGame().endOfGame === null || this.getTimeRemaining() > 0) {
-              this.router.navigate([`Game`]);
+          console.log('Game\'s not over, redirecting to Game');
+          this.router.navigate([`Game`]);
         }
 
-        console.log('calculating points');
-        this.playerOnePoints = this.getPoints(this.matchService.getGame().playerOneHand);
-        this.playerTwoPoints = this.getPoints(this.matchService.getGame().playerTwoHand);
-
-        this.apiService.getGuessedMissions(this.matchService.getGame().id)
-        .subscribe(guesses => {
-          guesses.filter(g => g.userId === this.matchService.getMatch().player.id).forEach(guess => {
-
-            this.playerOnePoints -= 1;
+        this.apiService.endGame(this.matchService.getGame().id)
+          .subscribe(response => {
+            this.matchService.setGame(response.game);
+            this.summary = response.summary;
+            this.win = response.summary.winnerIds.includes(this.matchService.getPlayer().id);
+            this.loading = false;
           });
-
-          guesses.filter(g => g.userId === this.matchService.getMatch().opponent.id).forEach(guess => {
-            this.playerTwoPoints -= 1;
-          });
-
-          this.win = this.playerOnePoints > this.playerTwoPoints || this.playerOnePoints === this.playerTwoPoints;
-
-          if (this.matchService.getMatch().currentGame.status !== 'finished') {
-          // need to check this on the server side to make sure we're not making data changes on an already finished game
-            this.apiService.endGame(this.matchService.getGame().id,
-              this.win ? this.matchService.getMatch().player.id : this.matchService.getMatch().opponent.id)
-              .subscribe(g => this.matchService.setGame(g));
-          }
-        });
     });
   }
 
-  private getPoints(cards: Card[]): number {
-    const reduced = cards.reduce((accumulator, currentCard) => {
-      switch (currentCard.status) {
-        case 'complete':
-          console.log(`${currentCard.title} completed +${currentCard.pointvalue}`);
-          return accumulator + currentCard.pointvalue;
-        case 'brownie-complete':
-          console.log(`${currentCard.title} brownie completed +${currentCard.pointvalue + currentCard.browniepointvalue}`);
-          return accumulator + currentCard.pointvalue + currentCard.browniepointvalue;
-        case 'incomplete' :
-          console.log(`${currentCard.title} completed -${currentCard.pointvalue}`);
-          return accumulator - currentCard.pointvalue;
-        case 'guessed' :
-          console.log(`${currentCard.title} completed +0`);
-          return accumulator;
-        default:
-          console.log('something went wrong');
-          return accumulator;
-      }
-    }, 0);
-    console.log(reduced);
-    return reduced;
+  getPointsDisplay(card: Card): string {
+    switch(card.status) {
+      case 'complete':
+        return `+ ${card.pointvalue}`;
+      case 'brownie-complete':
+        return `+ ${card.pointvalue + card.browniepointvalue}`;
+      case 'incomplete':
+        return `- ${card.pointvalue}`;
+      case 'guessed':
+        return '+ 0';
+    }
   }
 
   startNewGame() {
     this.apiService.addGame(this.matchService.getMatch().id)
       .subscribe(g => {
         this.matchService.setGame(g);
-        console.log(`new game: ${this.matchService.getGame().id}`);
         this.router.navigate(['Game']);
       });
   }

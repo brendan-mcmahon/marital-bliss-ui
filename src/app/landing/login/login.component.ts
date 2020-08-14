@@ -9,18 +9,18 @@ import { Match } from 'src/app/models/match';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['../landing.component.scss', './login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
   @Output() cancel = new EventEmitter<any>();
   errorMessage: string;
 
-  constructor(
+  constructor (
     private router: Router,
     private apiService: ApiService,
     private matchService: MatchService,
-    private authService: AuthService) {}
+    private authService: AuthService) { }
 
   model = new UserLogin();
   matches: Match[];
@@ -28,24 +28,38 @@ export class LoginComponent implements OnInit {
   login() {
     console.log('logging in');
     this.authService.login(this.model)
-    .subscribe(result => {
-      this.apiService.getAllMatches().subscribe(m => {
-        this.matchService.setMatch(m[0]);
-        this.router.navigate(['Game']);
-      });
-    },
-    error => {
-      console.log(`${JSON.stringify(error)}`);
-      if (error.status === 401) {
-        this.errorMessage = 'Your username or password were not correct. Please try again.';
-      }
-    });
+      .subscribe(result => {
+        this.apiService.getUser().subscribe(user => {
+          this.authService.loggedInUser$.next(user);
+        });
+        this.apiService.getAllMatches().subscribe(m => {
+          const defaultMatch = this.getDefaultMatch(m);
+          if (defaultMatch) { this.matchService.setMatch(defaultMatch); }
+          this.router.navigate(['Game']);
+        });
+      },
+        error => {
+          console.log(`${JSON.stringify(error)}`);
+          if (error.status === 401) {
+            this.errorMessage = 'Your username or password were not correct. Please try again.';
+          }
+        });
   }
 
-  emitCancel() {
-    this.cancel.emit();
-  }
+getDefaultMatch(matches: Match[]) {
+  let defaultMatch = matches.filter(m => m.currentGame && m.currentGame.status === 'in progress')[0];
+  if (!defaultMatch) { defaultMatch = matches.filter(m => m.currentGame && m.currentGame.status === 'pending')[0]; }
+  if (!defaultMatch) { defaultMatch = matches.filter(m => m.currentGame && m.currentGame.status === 'new')[0]; }
+  if (!defaultMatch) { defaultMatch = matches.filter(m => m.currentGame && m.currentGame.status === 'finished')[0]; }
+  if (!defaultMatch) { defaultMatch = matches[0]; }
+  if (defaultMatch) { return defaultMatch; }
+  return null;
+}
 
-  ngOnInit() { }
+emitCancel() {
+  this.cancel.emit();
+}
+
+ngOnInit() { }
 
 }

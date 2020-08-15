@@ -26,6 +26,7 @@ export class MenuComponent implements OnInit {
   showMenu = false;
   showMatches = false;
   showAccount = false;
+  showNotifications = false;
   showBugReport = false;
 
   constructor(public matchService: MatchService, private router: Router, private authService: AuthService) { }
@@ -39,6 +40,7 @@ export class MenuComponent implements OnInit {
 }
 
   toggleMenu() {
+    console.log('toggling menu');
     this.showMenu = !this.showMenu;
   }
 
@@ -46,16 +48,39 @@ export class MenuComponent implements OnInit {
     return this.showMenu ? '100%' : '0';
   }
 
+  toggleAllFalse() {
+    this.showMatches = false;
+    this.showAccount = false;
+    this.showNotifications = false;
+    this.showBugReport = false;
+  }
+
   toggleShowMatches() {
     this.showMatches = !this.showMatches;
+    this.showAccount = false;
+    this.showNotifications = false;
+    this.showBugReport = false;
+  }
+
+  toggleShowNotifications() {
+    this.showNotifications = !this.showNotifications;
+    this.showMatches = false;
+    this.showAccount = false;
+    this.showBugReport = false;
   }
 
   toggleShowAccount() {
     this.showAccount = !this.showAccount;
+    this.showMatches = false;
+    this.showNotifications = false;
+    this.showBugReport = false;
   }
 
   toggleShowBugReport() {
     this.showBugReport = !this.showBugReport;
+    this.showMatches = false;
+    this.showAccount = false;
+    this.showNotifications = false;
   }
 
   navigateTo(route: string) {

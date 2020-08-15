@@ -24,7 +24,6 @@
   <div class="menu-items">
     <div class="menu-item" [ngStyle]="{ 'padding-bottom': showMatches ? '8px' : '0px' }">
       <div (click)="toggleShowMatches()" class="action-item" [ngStyle]="{ 'border-radius': showMatches ? '8px 8px 0px 0px' : '8px' }">
-        <!-- <img src="../../assets/icons/people-icon.svg" alt="people" /> -->
         <fa-icon [icon]="people"></fa-icon>
         <p>Matches</p>
         <fa-icon class="chevron" *ngIf="!showMatches" [icon]="chevronDown"></fa-icon>
@@ -35,7 +34,6 @@
 
     <div class="menu-item" [ngStyle]="{ 'padding-bottom': showAccount ? '8px' : '0px' }">
       <div (click)="toggleShowAccount()" class="action-item" [ngStyle]="{ 'border-radius': showAccount ? '8px 8px 0px 0px' : '8px' }">
-        <!-- <img src="../../assets/icons/person-icon.svg" alt="person" /> -->
         <fa-icon [icon]="person"></fa-icon>
         <p>Account</p>
         <fa-icon class="chevron"  *ngIf="!showAccount" [icon]="chevronDown"></fa-icon>
@@ -44,18 +42,18 @@
       <app-account *ngIf="showAccount"></app-account>
     </div>
 
-    <div class="menu-item">
-      <div class="action-item" (click)="navigateTo('Notifications')">
-        <!-- <img src="../../assets/icons/bell-icon.svg" alt="bell" /> -->
+    <div class="menu-item" [ngStyle]="{ 'padding-bottom': showNotifications ? '8px' : '0px' }">
+      <div (click)="toggleShowNotifications()" class="action-item" [ngStyle]="{ 'border-radius': showNotifications ? '8px 8px 0px 0px' : '8px' }">
         <fa-icon [icon]="bell"></fa-icon>
         <p>Notifications</p>
-        <fa-icon class="chevron"  [icon]="chevronRight"></fa-icon>
+        <fa-icon class="chevron"  *ngIf="!showNotifications" [icon]="chevronDown"></fa-icon>
+        <fa-icon class="chevron"  *ngIf="showNotifications" [icon]="chevronUp"></fa-icon>
       </div>
+      <app-notifications (closeMenuTrigger)="toggleMenu()" *ngIf="showNotifications"></app-notifications>
     </div>
 
     <div class="menu-item" [ngStyle]="{ 'padding-bottom': showBugReport ? '8px' : '0px' }">
       <div (click)="toggleShowBugReport()" class="action-item" [ngStyle]="{ 'border-radius': showBugReport ? '8px 8px 0px 0px' : '8px' }">
-        <!-- <img src="../../assets/icons/person-icon.svg" alt="person" /> -->
         <fa-icon [icon]="bug"></fa-icon>
         <p>Report a Bug</p>
         <fa-icon class="chevron"  *ngIf="!showBugReport" [icon]="chevronDown"></fa-icon>

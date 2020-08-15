@@ -21,6 +21,13 @@
   // src: url("/assets/fonts/Cookie-Regular.ttf");
 }
 
+html {
+  height: 100%;
+  body {
+    height: 100%;
+  }
+}
+
 .modal-dialog {
   min-width: 350px;
 }

@@ -26,15 +26,15 @@ export class EndgameComponent implements OnInit {
         if (this.matchService.getGame().endOfGame === null || this.getTimeRemaining() > 0) {
           console.log('Game\'s not over, redirecting to Game');
           this.router.navigate([`Game`]);
+        } else {
+          this.apiService.endGame(this.matchService.getGame().id)
+            .subscribe(response => {
+              this.matchService.setGame(response.game);
+              this.summary = response.summary;
+              this.win = response.summary.winnerIds.includes(this.matchService.getPlayer().id);
+              this.loading = false;
+            });
         }
-
-        this.apiService.endGame(this.matchService.getGame().id)
-          .subscribe(response => {
-            this.matchService.setGame(response.game);
-            this.summary = response.summary;
-            this.win = response.summary.winnerIds.includes(this.matchService.getPlayer().id);
-            this.loading = false;
-          });
     });
   }
 

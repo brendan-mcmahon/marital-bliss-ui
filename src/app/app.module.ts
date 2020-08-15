@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import * as Hammer from 'hammerjs'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +39,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MenuComponent } from './menu/menu.component';
 import { RewardListComponent } from './rewards/reward-list/reward-list.component';
 import { BugReportComponent } from './bug-report/bug-report.component';
+import { LoadingComponent } from './loading/loading.component';
+
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = {
+    swipe: { direction: Hammer.DIRECTION_ALL },
+  } as any;
+}
 
 @NgModule({
   declarations: [
@@ -66,6 +75,7 @@ import { BugReportComponent } from './bug-report/bug-report.component';
     MenuComponent,
     RewardListComponent,
     BugReportComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +91,10 @@ import { BugReportComponent } from './bug-report/bug-report.component';
     //   provide: UrlSerializer,
     //   useClass: LowerCaseUrlSerializer
     // },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    },
     {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,

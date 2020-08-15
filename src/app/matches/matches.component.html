@@ -12,7 +12,7 @@
   </div>
 
   <!-- New Match Search -->
-  <input *ngIf="showUserSearch" placeholder="Find a person by name or email" (keyup)="search()" type="text" [(ngModel)]="searchTerms" />
+  <input autofocus *ngIf="showUserSearch" placeholder="Find a person by name or email" (keyup)="search()" type="text" [(ngModel)]="searchTerms" />
   <div class="mb-list" *ngIf="showUserSearch && allUsersDisplay && allUsersDisplay.length > 0">
 
     <div class="mb-list-item" *ngFor="let player of allUsersDisplay">

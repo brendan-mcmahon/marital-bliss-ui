@@ -1,5 +1,7 @@
 <div class="section">
 
+  <div *ngIf="loading" class="loading">Loading...</div>
+
   <app-reward-list [cards]="playerCards" [name]="'My'" [buttonPhase]="'view-player'"></app-reward-list>
 
   <app-reward-list [cards]="opponentCards" [name]="matchService.getOpponent().firstName + '\'s'" [buttonPhase]="'view-opponent'"></app-reward-list>

@@ -13,40 +13,15 @@
   fa-icon {
     font-size: 1.5em;
   }
-}
-
-.deck-header {
-  // background-color: $red;
-  // border-radius: 8px;
-  // border: solid $dark-red 2px;
-  // // margin: 8px 16px;
-  // display: flex;
-  // flex-direction: column;
-  // .deck-title {
-  //   display: flex;
-  //   justify-content: space-between;
-  //   // padding: 8px 24px;
-  //   align-items: center;
-  //   fa-icon {
-  //     font-size: 2em;
-  //   }
-  //   h3 {
-  //     margin: 0;
-  //   }
-  // }
   .filters {
-    // background-color: $dark-blue;
-    // padding: 8px;
-    // border-radius: 8px;
-    margin: 8px;
-    // border: solid $darkest-blue 2px;
     .search-field {
       display: flex;
       justify-content: space-between;
+      padding: 0px 8px;
       input {
         width: 100%;
         color: black;
-        margin: 12px;
+        margin: 16px 0px;
       }
     }
   }

@@ -4,6 +4,7 @@ import { ApiService } from '../api.service';
 import { MatchService } from '../match.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AlertComponent } from '../alert/alert.component';
+import { GesturesService } from '../gestures.service';
 
 @Component({
   selector: 'app-game',
@@ -21,17 +22,24 @@ export class GameComponent implements OnInit {
     public matchService: MatchService,
     private router: Router,
     private apiService: ApiService,
-    private modalService: BsModalService) { }
+    private modalService: BsModalService,
+    private gestureService: GesturesService) { }
 
   ngOnInit() {
+    this.gestureService.refresh$.subscribe(_ => {
+      this.getData();
+      this.loading = true;
+    });
+    this.getData();
+  }
 
+  private getData() {
+    console.log('getting game data');
     this.matchService.matchUpdate$.subscribe(m => {
       this.getMostRecentGame();
     });
-
-    // What do we do if there is no match now?!
     if (this.matchService.getMatch() === null) {
-      // show a static message I guess?
+      console.warn('No match available!');
     } else {
       this.getMostRecentGame();
     }

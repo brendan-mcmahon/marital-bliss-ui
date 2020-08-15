@@ -13,7 +13,7 @@ export class EditNotificationComponent implements OnInit {
 
   @Input() notification: Notification;
   @Output() closeTrigger = new EventEmitter<any>();
-  @Output() responseTrigger = new EventEmitter<number>();
+  @Output() responseTrigger = new EventEmitter<any>();
 
   missionEntityTypes = ['mission', 'guess'];
   rewardEntityTypes = ['reward', 'userReward'];
@@ -43,21 +43,24 @@ export class EditNotificationComponent implements OnInit {
   accept() {
     this.apiService.updateEditStatus(this.notification.entityType, this.notification.id, 'accepted')
       .subscribe(r => {
-        this.responseTrigger.emit(this.notification.id);
+        this.notification.status = 'accepted';
+        this.responseTrigger.emit({ notification: this.notification, response: r });
       });
   }
 
   reject() {
     this.apiService.updateEditStatus(this.notification.entityType, this.notification.id, 'rejected')
       .subscribe(r => {
-        this.responseTrigger.emit(this.notification.id);
+        this.notification.status = 'rejected';
+        this.responseTrigger.emit({ notification: this.notification, response: r });
       });
   }
 
   acknowledge() {
     this.apiService.updateEditStatus(this.notification.entityType, this.notification.id, 'acknowledged')
     .subscribe(r => {
-      this.responseTrigger.emit(this.notification.id);
+      this.notification.status = 'acknowledged';
+      this.responseTrigger.emit({ notification: this.notification, response: r });
     });
   }
 }

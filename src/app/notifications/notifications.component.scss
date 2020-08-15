@@ -1,8 +1,14 @@
 @import "../variables.scss";
 
+.notification-container {
+  text-align: center;
+}
+
 .count {
   background-color: $pale-yellow;
+  background-color: $blue;
   color: $dark-red;
+  color: $darkest-blue;
   margin: 16px;
   padding: 4px;
   border-radius: 8px;

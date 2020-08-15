@@ -6,7 +6,7 @@
 
     <div *ngIf="showDeck" class="filters">
       <div class="search-field">
-        <input placeholder="Type to filter" type="text" [(ngModel)]="filterText" (keyup)="filterDisplay()">
+        <input autofocus placeholder="Type to filter" type="text" [(ngModel)]="filterText" (keyup)="filterDisplay()">
       </div>
 
       <div class="checkbox-container">

@@ -8,7 +8,7 @@
   <div class="card-placeholder wrong" *ngIf="selectedMission && guessStatus && guessStatus === 'correct'">You nailed it! {{matchService.getMatch().opponent.firstName}} <span>does</span> have {{selectedMission.title}}!</div>
 
   <div *ngIf="guessEnabled" class="filters"><div class="search-field">
-  <input placeholder="Type to filter" type="text" [(ngModel)]="filterText" (keyup)="filter()">
+  <input autofocus placeholder="Type to filter" type="text" [(ngModel)]="filterText" (keyup)="filter()">
   </div></div>
 
   <div class="sub-header" *ngIf="!guessEnabled">

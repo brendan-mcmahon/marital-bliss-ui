@@ -1,5 +1,7 @@
-<app-menu *ngIf="loggedIn"></app-menu>
+<div class="gesture-container" (swipedown)="onSwipeDown($event)" (swipeleft)="onSwipeLeft($event)" (swiperight)="onSwipeRight($event)">
+  <app-menu *ngIf="loggedIn"></app-menu>
 
-<!-- ngIf this on getMatch()? -->
-<router-outlet></router-outlet>
-<app-footer class="footer"></app-footer>
+  <!-- ngIf this on getMatch()? -->
+  <router-outlet></router-outlet>
+  <app-footer class="footer"></app-footer>
+</div>

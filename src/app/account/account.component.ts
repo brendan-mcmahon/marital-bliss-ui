@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { MatchService } from '../match.service';
@@ -21,13 +21,19 @@ export class AccountComponent implements OnInit {
   editLastName = false;
   editEmail = false;
 
+  // @ViewChild('firstNameInput', {static: false}) firstNameInput: ElementRef;
+  @ViewChild('firstNameInput') firstNameInput: ElementRef;
+  @ViewChild('lastNameInput') lastNameInput: ElementRef;
+  @ViewChild('emailInput') emailInput: ElementRef;
+
   player: Player;
 
   constructor(
     public matchService: MatchService,
     private authService: AuthService,
     private router: Router,
-    private apiService: ApiService) { }
+    private apiService: ApiService,
+    private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.apiService.getUser()
@@ -41,9 +47,18 @@ export class AccountComponent implements OnInit {
   }
 
   toggleEdit(field: string) {
-    if (field === 'firstName') { this.editFirstName = !this.editFirstName; }
-    if (field === 'lastName') { this.editLastName = !this.editLastName; }
-    if (field === 'email') { this.editEmail = !this.editEmail; }
+    if (field === 'firstName') {
+      this.editFirstName = !this.editFirstName;
+      if (this.editFirstName) { this.firstNameInput.nativeElement.focus(); }
+    }
+    if (field === 'lastName') {
+      this.editLastName = !this.editLastName;
+      if (this.editLastName) { this.lastNameInput.nativeElement.focus(); }
+    }
+    if (field === 'email') {
+      this.editEmail = !this.editEmail;
+      if (this.editEmail) { this.emailInput.nativeElement.focus(); }
+    }
   }
 
   saveEdit(field: string) {

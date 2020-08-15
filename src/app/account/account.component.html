@@ -5,7 +5,7 @@
       <p *ngIf="!editFirstName">{{player.firstName}}</p> <button *ngIf="!editFirstName" class="mb-btn-primary" (click)="toggleEdit('firstName')"><fa-icon [icon]="pencil"></fa-icon></button>
       <div *ngIf="editFirstName" class="edit">
         <label>First Name</label>
-        <input [(ngModel)]="player.firstName" placeholder="First Name" type="text">
+        <input #firstNameInput [(ngModel)]="player.firstName" placeholder="First Name" type="text" autofocus>
         <div class="button-group"><button class="mb-btn-primary" (click)="saveEdit('firstName')"><fa-icon [icon]="check"></fa-icon></button><button class="mb-btn-secondary" (click)="toggleEdit('firstName')"><fa-icon [icon]="close"></fa-icon></button></div>
       </div>
     </div>
@@ -14,7 +14,7 @@
       <p *ngIf="!editLastName">{{player.lastName}}</p> <button *ngIf="!editLastName" class="mb-btn-primary" (click)="toggleEdit('lastName')"><fa-icon [icon]="pencil"></fa-icon></button>
       <div *ngIf="editLastName" class="edit">
         <label>Last Name</label>
-        <input [(ngModel)]="player.lastName" placeholder="Last Name" type="text">
+        <input #lastNameInput autofocus [(ngModel)]="player.lastName" placeholder="Last Name" type="text">
         <div class="button-group"><button class="mb-btn-primary" (click)="saveEdit('lastName')"><fa-icon [icon]="check"></fa-icon></button><button class="mb-btn-secondary" (click)="toggleEdit('lastName')"><fa-icon [icon]="close"></fa-icon></button></div>
       </div>
     </div>
@@ -23,7 +23,7 @@
       <p *ngIf="!editEmail">{{player.email}}</p> <button *ngIf="!editEmail" class="mb-btn-primary" (click)="toggleEdit('email')"><fa-icon [icon]="pencil"></fa-icon></button>
       <div *ngIf="editEmail" class="edit">
         <label>Email</label>
-        <input  [(ngModel)]="player.email" placeholder="Email" type="text">
+        <input #emailInput autofocus [(ngModel)]="player.email" placeholder="Email" type="text">
         <div class="button-group"><button class="mb-btn-primary" (click)="saveEdit('email')"><fa-icon [icon]="check"></fa-icon></button><button class="mb-btn-secondary" (click)="toggleEdit('email')"><fa-icon [icon]="close"></fa-icon></button></div>
       </div>
   </div>

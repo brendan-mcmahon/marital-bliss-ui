@@ -1,0 +1,17 @@
+<div class="summary-container" [ngClass]="{'win': win, 'lose': !win }">
+  <div class="summary-header" *ngIf="win">
+    <h3>
+      Woohoo! You won!
+    </h3>
+    <p> Here's what your reward!</p>
+  </div>
+
+  <div class="summary-header" *ngIf="!win">
+    <h3>
+      Oh no, you lost!
+    </h3>
+    <p> Here's what you owe {{opponentName}}!</p>
+  </div>
+
+  <app-reward-card [buttonPhase]="'view'" [reward]="reward"></app-reward-card>
+</div>

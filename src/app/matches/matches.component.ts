@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../api.service';
+import { ApiService } from '../services/api.service';
 import { Match } from '../models/match';
-import { MatchService } from '../match.service';
-import { AuthService } from '../auth.service';
+import { MatchService } from '../services/match.service';
+import { AuthService } from '../services/auth/auth.service';
 import { Player } from '../models/player';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -31,12 +31,7 @@ export class MatchesComponent implements OnInit {
     private authService: AuthService) {}
 
   ngOnInit() {
-    // this.apiService.getAllMatches().subscribe(m => {
-    //   console.log('getting all matches...');
-    //   console.log(JSON.stringify(m));
-    //   this.matches = m;
-    // });
-    this.matches = this.matchService.matches;
+    this.matchService.matches$.refreshAndSubscribe(m => this.matches = m);
   }
 
   goToGame(match: Match) {

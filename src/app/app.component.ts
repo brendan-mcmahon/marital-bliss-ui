@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from './api.service';
-import { MatchService } from './match.service';
-import { AuthService } from './auth.service';
+import { ApiService } from './services/api.service';
+import { MatchService } from './services/match.service';
+import { AuthService } from './services/auth/auth.service';
 import { Router } from '@angular/router';
-import { GesturesService } from './gestures.service';
+import { GesturesService } from './services/gestures.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   title = 'marital-bliss-ui';
 
   loggedIn = false;
-
+  hasMatch = false;
   activeRoute: string;
   navigationOrder = ['Game', 'Guess', 'Rewards', 'Deck'];
 
@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    this.matchService.match$.subscribe(m => this.hasMatch = m !== null);
     this.authService.isLoggedIn$.subscribe(i => this.loggedIn = i);
     this.apiService.getAllMatches().subscribe(m => {
       this.matchService.setMatches(m);

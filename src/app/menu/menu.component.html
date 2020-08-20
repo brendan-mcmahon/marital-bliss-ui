@@ -1,16 +1,14 @@
-<div *ngIf="!hasMatch" class="page-header" (click)="toggleMenu()">
-  <!-- <app-matches></app-matches> -->
-  <h1 *ngIf="matchService.getPlayer()">{{ matchService.getPlayer().firstName }}</h1>
-  <h1 *ngIf="!matchService.getPlayer()">loading...</h1>
+<div *ngIf="!hasMatch" class="menu-header" (click)="toggleMenu()">
+  <h2 *ngIf="matchService.player$.value">{{ playerName }}</h2>
+  <h2 *ngIf="!matchService.player$.value">loading...</h2>
   <fa-icon [icon]="hamburger"></fa-icon>
-  <!-- <button class="mb-btn-secondary" (click)="logout()">log out</button> -->
 </div>
 
-<div *ngIf="hasMatch" class="page-header" (click)="toggleMenu()">
-  <h1>
-    {{ matchService.getPlayer().firstName }} vs.
+<div *ngIf="hasMatch" class="menu-header" (click)="toggleMenu()">
+  <h2>
+    {{ playerName }} vs.
     {{ matchService.getOpponent().firstName }}
-  </h1>
+  </h2>
   <fa-icon [icon]="hamburger"></fa-icon>
 </div>
 
@@ -44,7 +42,8 @@
 
     <div class="menu-item" [ngStyle]="{ 'padding-bottom': showNotifications ? '8px' : '0px' }">
       <div (click)="toggleShowNotifications()" class="action-item" [ngStyle]="{ 'border-radius': showNotifications ? '8px 8px 0px 0px' : '8px' }">
-        <fa-icon [icon]="bell"></fa-icon>
+        <span *ngIf="notificationCount" class="wiggle badge-number icon" [attr.data-count]="notificationCount" ><fa-icon class="grow" [icon]="bell"></fa-icon></span>
+        <fa-icon *ngIf="!notificationCount" [icon]="bell"></fa-icon>
         <p>Notifications</p>
         <fa-icon class="chevron"  *ngIf="!showNotifications" [icon]="chevronDown"></fa-icon>
         <fa-icon class="chevron"  *ngIf="showNotifications" [icon]="chevronUp"></fa-icon>

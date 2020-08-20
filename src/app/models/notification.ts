@@ -10,4 +10,11 @@ export class Notification {
   subject: string;
   body: string;
   createdOn: Date;
+  fields: FieldEdit[];
+}
+
+export class FieldEdit {
+  editId: number;
+  field: string;
+  newValue: string;
 }

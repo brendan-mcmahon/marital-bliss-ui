@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MatchService } from '../../match.service';
+import { MatchService } from '../../services/match.service';
 import { Card } from 'src/app/models/card';
-import { ApiService } from 'src/app/api.service';
+import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { EndGameSummary } from 'src/app/models/EndGameSummary';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { RewardCardComponent } from '../reward-card/reward-card.component';
+import { Reward } from 'src/app/models/reward';
+import { EndgameAlertComponent } from './endgame-alert/endgame-alert.component';
 
 @Component({
   selector: 'app-endgame',
@@ -15,8 +19,14 @@ export class EndgameComponent implements OnInit {
   loading = true;
   win: boolean;
   summary: EndGameSummary;
+  bsModalRef: BsModalRef;
+  winnerReward: Reward;
 
-  constructor(private apiService: ApiService, public matchService: MatchService, private router: Router) { }
+  constructor(
+    private apiService: ApiService,
+    public matchService: MatchService,
+    private router: Router,
+    private modalService: BsModalService) { }
 
   ngOnInit() {
     this.apiService.getMostRecentGame(this.matchService.getMatch().id)
@@ -31,11 +41,28 @@ export class EndgameComponent implements OnInit {
             .subscribe(response => {
               this.matchService.setGame(response.game);
               this.summary = response.summary;
-              this.win = response.summary.winnerIds.includes(this.matchService.getPlayer().id);
+              this.win = response.summary.winnerIds.includes(this.matchService.player$.value.id);
+
+              this.winnerReward = this.win
+                ? this.matchService.getGame().playerOneRewards[0]
+                : this.matchService.getGame().playerTwoRewards[0];
+
+              this.displayReward(this.winnerReward);
+
               this.loading = false;
             });
         }
     });
+  }
+
+
+  displayReward(reward: Reward) {
+    const initialState = {
+      reward,
+      win: this.win,
+      opponentName: this.matchService.getOpponent().firstName
+    };
+    this.bsModalRef = this.modalService.show(EndgameAlertComponent, {initialState});
   }
 
   getPointsDisplay(card: Card): string {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/api.service';
-import { MatchService } from 'src/app/match.service';
+import { ApiService } from 'src/app/services/api.service';
+import { MatchService } from 'src/app/services/match.service';
 import { Card } from 'src/app/models/card';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { MissionCardComponent } from '../mission-card/mission-card.component';
@@ -23,29 +23,24 @@ export class GuessMissionComponent implements OnInit {
   guessStatus: string;
   guessEnabled = false;
 
-  constructor(
+  constructor (
     private apiService: ApiService,
     public matchService: MatchService,
-    private modalService: BsModalService,
-    private router: Router
-    ) { }
+    private modalService: BsModalService
+  ) { }
 
   ngOnInit() {
-    if (this.matchService.getMatch() === null) {
-      this.router.navigate(['Matches']);
-    }
-
     this.guessEnabled = this.matchService.getGame().status === 'in progress';
     this.apiService.getMissionDeck(this.matchService.getMatch().id)
       .subscribe(d => {
         this.apiService.getGuessedMissions(this.matchService.getGame().id)
-        .subscribe(g => {
-          const alreadyGuessedIds = g
-            .filter(guessed => guessed.userId === this.matchService.getMatch().player.id)
-            .map(guessed => guessed.card.id);
-          this.deck = d.filter(card => !alreadyGuessedIds.includes(card.id) && card.status === 'enabled');
-          this.deckDisplay = [...this.deck];
-        });
+          .subscribe(g => {
+            const alreadyGuessedIds = g
+              .filter(guessed => guessed.userId === this.matchService.getMatch().player.id)
+              .map(guessed => guessed.card.id);
+            this.deck = d.filter(card => !alreadyGuessedIds.includes(card.id) && card.status === 'enabled');
+            this.deckDisplay = [...this.deck];
+          });
       });
   }
 
@@ -55,7 +50,7 @@ export class GuessMissionComponent implements OnInit {
       opponentName: this.matchService.getOpponent().firstName,
       correct
     };
-    this.bsModalRef = this.modalService.show(GuessResultComponent, {initialState});
+    this.bsModalRef = this.modalService.show(GuessResultComponent, { initialState });
     this.bsModalRef.content.closeTrigger.subscribe((value: any) => {
       this.bsModalRef.hide();
     });
@@ -74,10 +69,10 @@ export class GuessMissionComponent implements OnInit {
   missionSelected(mission: Card) {
     this.selectedMission = mission;
     const initialState = {
-        card: mission,
-        buttonPhase: 'guess'
-      };
-    this.bsModalRef = this.modalService.show(MissionCardComponent, {initialState});
+      card: mission,
+      buttonPhase: 'guess'
+    };
+    this.bsModalRef = this.modalService.show(MissionCardComponent, { initialState });
     this.bsModalRef.content.cardGuessed.subscribe((value: any) => {
       this.bsModalRef.hide();
       this.guess(mission);
@@ -88,7 +83,7 @@ export class GuessMissionComponent implements OnInit {
   filter() {
     if (this.filterText !== '') {
       this.deckDisplay = this.deck.filter(mission => {
-        return  mission.title.match(new RegExp(this.filterText, 'i'))
+        return mission.title.match(new RegExp(this.filterText, 'i'))
           || mission.description.match(new RegExp(this.filterText, 'i'))
       });
     } else {

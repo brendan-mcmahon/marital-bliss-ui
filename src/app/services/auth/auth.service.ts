@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserRegistration } from './user-registration';
+import { UserRegistration } from '../../models/user-registration';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { UserLogin } from './user-login';
+import { UserLogin } from '../../models/user-login';
 import { shareReplay, tap } from 'rxjs/operators';
 import * as moment from 'moment';
-import { Player } from './models/player';
-import { ApiService } from './api.service';
+import { Player } from '../../models/player';
+import { ApiService } from '../api.service';
+import { RefreshingSubject } from 'src/app/RefreshingSubject';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ import { ApiService } from './api.service';
 export class AuthService {
 
   baseUrl = 'https://localhost:3001/account';
-  loggedInUser$ = new BehaviorSubject<Player>(null);
+  loggedInUser$ = new RefreshingSubject<Player>(null, () => this.apiService.getUser());
   public isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private apiService: ApiService) {
@@ -37,17 +38,6 @@ export class AuthService {
         this.isLoggedIn$.next(true);
       }));
     // .shareReplay();
-  }
-
-  getLoggedInUser() {
-    if (this.loggedInUser$.value !== null) {
-      return this.loggedInUser$.value;
-    } else {
-      this.apiService.getUser().subscribe(u => {
-        this.loggedInUser$.next(u);
-        this.isLoggedIn$.next(true);
-      });
-    }
   }
 
   private setSession(token: JwtToken) {

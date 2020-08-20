@@ -1,0 +1,67 @@
+@import "../../../variables.scss";
+
+.mb-form-group {
+  label {
+    font-size: .7em;
+    text-align: left;
+  }
+  input {
+    font-size: 1em;
+  }
+  textarea {
+    font-size: 1em;
+  }
+}
+
+.card-header {
+  .title {
+    flex-grow: 1;
+    margin: 0px 8px;
+    input {
+      font-family: small-header;
+      font-size: 1.5em;
+      background-color: $pale-yellow !important;
+      border: none;
+      border-bottom: solid $dark-red 2px;
+      border-radius: 0px;
+      margin: 0;
+      &:focus {
+        outline: none;
+        border: none;
+        box-shadow: none;
+        border-bottom: solid $dark-red 2px;
+      }
+    }
+  }
+  .points {
+    max-width: 20%;
+    input {
+      padding: 0;
+      font-family: small-header;
+      background-color: $red;
+      color: $pale-yellow;
+      font-size: 1.5em;
+      text-align: center;
+      margin: 0;
+      &::placeholder {
+        color: $pale-yellow;
+      }
+      &:focus {
+        outline: none;
+        border: none;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+.card-body {
+  textarea {
+    border-radius: 8px;
+    &:focus {
+      outline: none;
+      border-color: grey;
+      box-shadow: none;
+    }
+  }
+}

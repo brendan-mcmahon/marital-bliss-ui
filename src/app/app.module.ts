@@ -16,7 +16,7 @@ import { LoginComponent } from './landing/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { LandingComponent } from './landing/landing.component';
 import { RegisterComponent } from './landing/register/register.component';
-import { AuthInterceptor } from './auth-interceptor';
+import { AuthInterceptor } from './services/auth/auth-interceptor';
 import { MissionCardComponent } from './game/mission-card/mission-card.component';
 import { RewardCardComponent } from './game/reward-card/reward-card.component';
 import { EndgameComponent } from './game/endgame/endgame.component';
@@ -40,6 +40,9 @@ import { MenuComponent } from './menu/menu.component';
 import { RewardListComponent } from './rewards/reward-list/reward-list.component';
 import { BugReportComponent } from './bug-report/bug-report.component';
 import { LoadingComponent } from './loading/loading.component';
+import { EditMissionComponent } from './game/mission-card/edit-mission/edit-mission.component';
+import { EditRewardComponent } from './game/reward-card/edit-reward/edit-reward.component';
+import { EndgameAlertComponent } from './game/endgame/endgame-alert/endgame-alert.component';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = {
@@ -76,6 +79,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     RewardListComponent,
     BugReportComponent,
     LoadingComponent,
+    EditMissionComponent,
+    EditRewardComponent,
+    EndgameAlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,6 +112,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     RewardCardComponent,
     GuessResultComponent,
     EditNotificationComponent,
+    EditMissionComponent,
+    EditRewardComponent,
+    EndgameAlertComponent,
     AlertComponent
   ],
   bootstrap: [AppComponent]

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../api.service';
-import { MatchService } from '../match.service';
+import { ApiService } from '../services/api.service';
+import { MatchService } from '../services/match.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AlertComponent } from '../alert/alert.component';
-import { GesturesService } from '../gestures.service';
+import { GesturesService } from '../services/gestures.service';
 
 @Component({
   selector: 'app-game',
@@ -26,6 +26,9 @@ export class GameComponent implements OnInit {
     private gestureService: GesturesService) { }
 
   ngOnInit() {
+    this.matchService.match$.subscribe(m => {
+      if (m) { this.getMostRecentGame(); }
+    });
     this.gestureService.refresh$.subscribe(_ => {
       this.getData();
       this.loading = true;
@@ -34,14 +37,11 @@ export class GameComponent implements OnInit {
   }
 
   private getData() {
-    console.log('getting game data');
-    this.matchService.matchUpdate$.subscribe(m => {
+    if (this.matchService.getMatch()) {
       this.getMostRecentGame();
-    });
-    if (this.matchService.getMatch() === null) {
-      console.warn('No match available!');
     } else {
-      this.getMostRecentGame();
+      this.loading = false;
+      // this.router.navigate(['Game']);
     }
   }
 
@@ -133,9 +133,6 @@ export class GameComponent implements OnInit {
       .subscribe(g => {
         console.log(g);
         this.openAlert(`A request has been sent to ${this.matchService.getOpponent().firstName} to end the game early!`);
-        // confirmation popup saying the notification has been sent?
-        // this.matchService.setGame(g);
-        // this.router.navigate(['EndGame']);
       });
   }
 }

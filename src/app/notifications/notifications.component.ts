@@ -1,10 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { ApiService } from '../api.service';
 import { Notification } from '../models/notification';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { EditNotificationComponent } from './notification/notification.component';
 import { faInfoCircle, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
+import { GesturesService } from '../services/gestures.service';
+import { MatchService } from '../services/match.service';
 
 @Component({
   selector: 'app-notifications',
@@ -23,15 +24,28 @@ export class NotificationsComponent implements OnInit {
   acceptIcon = faCheck;
 
 
-  constructor(private apiService: ApiService,
+  constructor(private matchService: MatchService,
               private modalService: BsModalService,
-              private router: Router) { }
+              private router: Router,
+              private gestureService: GesturesService) { }
 
   ngOnInit() {
-    this.apiService.getNotifications()
-      .subscribe(n => {
-        this.notifications = n;
-      });
+    this.matchService.notification$.subscribe (n => this.notifications = this.sort(n));
+    this.gestureService.refresh$.subscribe(_ => {
+      this.matchService.notification$.refresh();
+    });
+
+    this.matchService.notification$.refresh();
+  }
+
+  sort(notifications: Notification[]) {
+    const compare = (a: Notification, b: Notification) => {
+      if (a.createdOn < b.createdOn) { return 1; }
+      if (a.createdOn > b.createdOn) { return -1; }
+      return 0;
+    }
+
+    return [...notifications.sort(compare)];
   }
 
   getIcon(notification: Notification) {
@@ -49,12 +63,9 @@ export class NotificationsComponent implements OnInit {
       this.bsModalRef.hide();
     });
 
-    // would be cool to take a function on response trigger to perform whatever action makes sense next
-    // (eg. end game redirect to game page)
     this.bsModalRef.content.responseTrigger.subscribe((response: { notification: Notification, response: any }) => {
-      this.notifications = [...this.notifications.filter(n => n.id !== response.notification.id)];
+      this.matchService.notification$.next([...this.notifications.filter(n => n.id !== response.notification.id)]);
 
-      console.log(`processing notification: ${JSON.stringify(response.notification)}`);
       this.processNotification(response.notification);
 
       this.bsModalRef.hide();
@@ -62,8 +73,17 @@ export class NotificationsComponent implements OnInit {
   }
 
   processNotification(n: Notification) {
+    console.log(`Processing notification: ${JSON.stringify(n)}`);
     if (n.entityType === 'game' && n.action === 'end' && n.status === 'accepted'){
       this.endGame();
+    }
+
+    if (n.entityType === 'mission' && n.status === 'accepted') {
+      this.matchService.missionDeck$.refresh();
+    }
+
+    if (n.entityType === 'reward' && n.status === 'accepted') {
+      this.matchService.rewardDeck$.refresh();
     }
   }
 

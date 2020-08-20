@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { ApiService } from 'src/app/api.service';
-import { MatchService } from 'src/app/match.service';
+import { ApiService } from 'src/app/services/api.service';
+import { MatchService } from 'src/app/services/match.service';
 
 @Component({
   selector: 'app-countdown',

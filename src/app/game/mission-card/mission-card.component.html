@@ -1,4 +1,6 @@
-<div [ngClass]="card.status" class="card-container">
+<app-edit-mission (cardUpdated)="editMission()" *ngIf="editMode" [mission]="card"></app-edit-mission>
+
+<div *ngIf="!editMode" [ngClass]="card.status" class="card-container">
   <div class="card-header">
     <h4>{{card.title}}</h4>
     <div class="points">
@@ -18,15 +20,11 @@
         <p>{{card.description}}</p>
       </div>
 
-      <!-- <hr /> -->
-
       <div class="brownie-point">
         <h4>Brownie Point:</h4>
         <p>{{card.browniepoint}}</p>
       </div>
     </div>
-
-    <!-- <hr /> -->
 
     <div *ngIf="buttonPhase === 'play'"  class="update-times">
       <p class="update-time" *ngIf="card.status === 'complete' && card.updatedate">Completed on: {{card.updatedate | date}}</p>
@@ -49,7 +47,7 @@
     </div>
 
     <div *ngIf="buttonPhase === 'edit'" class="button-group">
-      <button class="btn-tertiary" [ngClass]="rejectButtonStyle" (click)="editMission()">Edit</button>
+      <button class="btn-tertiary" [ngClass]="rejectButtonStyle" (click)="editMode = true">Edit</button>
       <button *ngIf="card.status === 'enabled'" class="mb-btn-secondary" [ngClass]="acceptButtonStyle"  (click)="disableMission()">Remove</button>
       <button *ngIf="card.status === 'disabled'" class="mb-btn-primary" [ngClass]="acceptButtonStyle"  (click)="enableMission()">Add</button>
     </div>

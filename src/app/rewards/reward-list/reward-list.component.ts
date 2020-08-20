@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Reward } from 'src/app/models/reward';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-import { MatchService } from 'src/app/match.service';
+import { MatchService } from 'src/app/services/match.service';
 
 @Component({
   selector: 'app-reward-list',

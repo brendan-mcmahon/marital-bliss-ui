@@ -3,14 +3,18 @@
     loading...
   </h2></div>
   <div *ngIf="!loading">
-    <div class="page-header">
+    <!-- <div class="page-header">
       <h2 *ngIf="win">You won!</h2>
       <h2 *ngIf="!win">You lost!</h2>
-    </div>
+    </div> -->
 
-  <app-end-game-summary [player]="matchService.getPlayer()" [points]="summary.playerOnePoints" [hand]="matchService.getGame().playerOneHand" [guesses]="summary.playerOneGuesses"></app-end-game-summary>
+  <app-end-game-summary [player]="matchService.player$.getValue()" [points]="summary.playerOnePoints" [hand]="matchService.getGame().playerOneHand" [guesses]="summary.playerOneGuesses"></app-end-game-summary>
 
   <app-end-game-summary [player]="matchService.getOpponent()" [points]="summary.playerTwoPoints" [hand]="matchService.getGame().playerTwoHand" [guesses]="summary.playerTwoGuesses"></app-end-game-summary>
+
+  <h4 class="page-header" *ngIf="win">This is what {{matchService.getOpponent().firstName}} owes you!</h4>
+  <h4 class="page-header" *ngIf="!win">This is what you owe {{matchService.getOpponent().firstName}}!</h4>
+  <app-reward-card [buttonPhase]="'view'" [reward]="winnerReward"></app-reward-card>
 
   <button class="mb-btn-secondary" (click)="startNewGame()">Start a new Round!</button></div>
 </div>

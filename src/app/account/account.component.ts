@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
-import { MatchService } from '../match.service';
-import { ApiService } from '../api.service';
+import { MatchService } from '../services/match.service';
+import { ApiService } from '../services/api.service';
 import { Player } from '../models/player';
 import { faTimes, faCheck, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -21,10 +21,9 @@ export class AccountComponent implements OnInit {
   editLastName = false;
   editEmail = false;
 
-  // @ViewChild('firstNameInput', {static: false}) firstNameInput: ElementRef;
-  @ViewChild('firstNameInput') firstNameInput: ElementRef;
-  @ViewChild('lastNameInput') lastNameInput: ElementRef;
-  @ViewChild('emailInput') emailInput: ElementRef;
+  @ViewChild('firstNameInput', { static: false }) firstNameInput: ElementRef;
+  @ViewChild('lastNameInput', { static: false }) lastNameInput: ElementRef;
+  @ViewChild('emailInput', { static: false }) emailInput: ElementRef;
 
   player: Player;
 
@@ -43,21 +42,22 @@ export class AccountComponent implements OnInit {
           this.matchService.match.player = user;
         }
         console.log(JSON.stringify(user))});
-    // this.player = this.matchService.getPlayer();
   }
 
   toggleEdit(field: string) {
+    // this.changeDetectorRef.detectChanges();
+    // console.log(this.firstNameInput);
     if (field === 'firstName') {
       this.editFirstName = !this.editFirstName;
-      if (this.editFirstName) { this.firstNameInput.nativeElement.focus(); }
+      // if (this.editFirstName) { this.firstNameInput.nativeElement.focus(); }
     }
     if (field === 'lastName') {
       this.editLastName = !this.editLastName;
-      if (this.editLastName) { this.lastNameInput.nativeElement.focus(); }
+      // if (this.editLastName) { this.lastNameInput.nativeElement.focus(); }
     }
     if (field === 'email') {
       this.editEmail = !this.editEmail;
-      if (this.editEmail) { this.emailInput.nativeElement.focus(); }
+      // if (this.editEmail) { this.emailInput.nativeElement.focus(); }
     }
   }
 
@@ -66,7 +66,6 @@ export class AccountComponent implements OnInit {
       .subscribe(p => {
         this.authService.loggedInUser$.next(p);
         this.player = p;
-        // this.player = this.matchService.getPlayer();
         this.toggleEdit(field);
       })
   }

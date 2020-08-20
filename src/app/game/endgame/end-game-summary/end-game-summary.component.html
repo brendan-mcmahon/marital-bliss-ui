@@ -1,13 +1,15 @@
 <div class="summary-table">
   <h3>{{player.firstName}}'s Missions:</h3>
-  <div [ngClass]="card.status" *ngFor="let card of hand" class="summary summary-item">
+  <div [ngClass]="card.status" *ngFor="let card of hand" class="summary summary-item" (click)="displayMission(card)">
     <p class="title">{{card.title}}</p>
     <p [ngClass]="card.status" class="points">{{getPointsDisplay(card)}}</p>
   </div>
-  <h3>{{player.firstName}}'s Guesses:</h3>
-  <div [ngClass]="{ 'correct': guess.correct, 'incorrect': !guess.correct }" *ngFor="let guess of guesses" class="summary summary-guess">
-    <p class="title">{{guess.card.title}}</p>
-    <p [ngClass]="{ 'correct': guess.correct, 'incorrect': !guess.correct }" class="points">{{guess.correct ? '+ 0' : '- 1'}}</p>
+  <div *ngIf="guesses && guesses.length > 0">
+    <h3>{{player.firstName}}'s Guesses:</h3>
+    <div [ngClass]="{ 'correct': guess.correct, 'incorrect': !guess.correct }" *ngFor="let guess of guesses" class="summary summary-guess"  (click)="displayMission(guess.card)">
+      <p class="title">{{guess.card.title}}</p>
+      <p [ngClass]="{ 'correct': guess.correct, 'incorrect': !guess.correct }" class="points">{{guess.correct ? '+ 0' : '- 1'}}</p>
+    </div>
   </div>
 
   <hr />

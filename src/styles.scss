@@ -80,6 +80,7 @@ hr {
   // padding: 8px;
   text-align: center;
   margin-bottom: 100px;
+  margin-top: 86px;
 }
 .section-heading,
 .section-description {
@@ -140,6 +141,7 @@ button {
   margin: 16px;
 }
 
+// I wonder if the &:not(:bullshit) needs to only be in the depressed class?
 .mb-btn-secondary {
   background-color: $red;
   color: $pale-yellow;
@@ -159,15 +161,6 @@ button {
   background-color: $pale-yellow;
   color: $dark-red;
   background: linear-gradient(145deg, #fffac6, #e0d3a7);
-  &:not(:disabled):focus, &:not(:disabled):hover {
-    color: $red;
-    box-shadow: inset 20px 20px 60px #d4c79d,
-                inset -20px -20px 60px #ffffd5;
-  }
-  &:not(:disabled):active, &:not(:disabled):not(.disabled):active:focus {
-    box-shadow: inset 20px 20px 60px #d4c79d,
-                inset -20px -20px 60px #ffffd5;
-  }
 }
 
 .depressed-primary {
@@ -181,8 +174,16 @@ button {
 }
 
 .depressed-tertiary {
-  box-shadow: inset 20px 20px 60px #d4c79d,
-              inset -20px -20px 60px #ffffd5;
+  color: $red;
+  box-shadow: inset 10px 10px 20px #c0b48e, inset -10px -10px 20px #ffffe4;
+  &:not(:disabled):focus, &:not(:disabled):hover {
+    color: $red;
+    box-shadow: inset 10px 10px 20px #c0b48e, inset -10px -10px 20px #ffffe4;
+  }
+  &:not(:disabled):active, &:not(:disabled):not(.disabled):active:focus {
+    color: $red;
+    box-shadow: inset 10px 10px 20px #c0b48e, inset -10px -10px 20px #ffffe4;
+  }
 }
 
 .page-header {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Reward } from 'src/app/models/reward';
-import { ApiService } from 'src/app/api.service';
-import { MatchService } from 'src/app/match.service';
+import { ApiService } from 'src/app/services/api.service';
+import { MatchService } from 'src/app/services/match.service';
 
 @Component({
   selector: 'app-reward-card',
@@ -15,6 +15,7 @@ export class RewardCardComponent implements OnInit {
   @Output() rewardStatusUpdated = new EventEmitter<boolean>();
   statusStyle = 'pending';
   buttonStyle: string;
+  editMode = false;
 
   constructor(private matchService: MatchService, private apiService: ApiService) { }
 
@@ -36,7 +37,7 @@ export class RewardCardComponent implements OnInit {
   }
 
   editReward() {
-
+    this.rewardStatusUpdated.emit(true);
   }
 
   disableReward() {

@@ -1,5 +1,9 @@
 <div class="matches-container">
-  <div *ngIf="!matches || matches.length === 0" class="static-message">You don't have any matches yet!</div>
+  <div *ngIf="!matches || matches.length === 0" class="static-message"><p>
+    You don't have any matches yet!
+  </p>
+  <button *ngIf="!showUserSearch" class="link-button mb-btn-secondary" (click)="openSearch()">Start a New Match</button>
+</div>
 
   <div *ngIf="matches && matches.length > 0" class="match-list">
     <div class="match" [ngClass]="{'depressed-tertiary': match.id === matchService.getMatch().id}" *ngFor="let match of matches" (click)="goToGame(match)">

@@ -40,7 +40,12 @@
 
 .modal-body {
   font-size: 1.1em;
-  padding: 16px;
+  // padding: 16px;
+  display: flex;
+  flex-direction: column;
+  .edit-buttons {
+    align-self: center;
+  }
 }
 
 .close-button {

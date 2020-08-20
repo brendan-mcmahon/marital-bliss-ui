@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
-import { ApiService } from '../api.service';
-import { MatchService } from '../match.service';
+import { ApiService } from '../services/api.service';
+import { MatchService } from '../services/match.service';
 
 @Component({
   selector: 'app-landing',

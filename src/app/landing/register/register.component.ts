@@ -1,8 +1,8 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { AuthService } from 'src/app/auth.service';
-import { UserRegistration } from 'src/app/user-registration';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { UserRegistration } from 'src/app/models/user-registration';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/api.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
     .subscribe(result => {
       this.apiService.getUser().subscribe(user => {
         this.authService.loggedInUser$.next(user);
-        this.router.navigate(['Matches']);
+        this.router.navigate(['Game']);
       });
     });
   }

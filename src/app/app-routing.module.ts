@@ -6,12 +6,13 @@ import { RewardsComponent } from './rewards/rewards.component';
 import { LandingComponent } from './landing/landing.component';
 import { EndgameComponent } from './game/endgame/endgame.component';
 import { GuessMissionComponent } from './game/guess-mission/guess-mission.component';
-import { AuthGuardService } from './auth-guard.service';
+import { AuthGuardService } from './services/auth/auth-guard.service';
 import { AccountComponent } from './account/account.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { DecksComponent } from './decks/decks.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MenuComponent } from './menu/menu.component';
+import { EditMissionComponent } from './game/mission-card/edit-mission/edit-mission.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'Deck', component: DecksComponent, canActivate: [AuthGuardService] },
   { path: 'Notifications', component: NotificationsComponent, canActivate: [AuthGuardService] },
   { path: 'Menu', component: MenuComponent, canActivate: [AuthGuardService] },
+  { path: 'EditMission', component: EditMissionComponent, canActivate: [AuthGuardService] },
   { path: '**', component: PageNotFoundComponent }
 ];
 

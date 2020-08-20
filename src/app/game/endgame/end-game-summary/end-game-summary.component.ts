@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Player } from 'src/app/models/player';
 import { Card } from 'src/app/models/card';
 import { Guess } from 'src/app/models/guess';
+import { MissionCardComponent } from '../../mission-card/mission-card.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-end-game-summary',
@@ -14,10 +16,20 @@ export class EndGameSummaryComponent implements OnInit {
   @Input() hand: Card[];
   @Input() points: number;
   @Input() guesses: Guess[];
+  bsModalRef: BsModalRef;
 
-  constructor() { }
+  constructor(private modalService: BsModalService) { }
 
   ngOnInit() {
+  }
+
+
+  displayMission(card: Card) {
+    const initialState = {
+      card,
+      buttonPhase: 'view'
+    };
+    this.bsModalRef = this.modalService.show(MissionCardComponent, {initialState});
   }
 
   getPointsDisplay(card: Card): string {

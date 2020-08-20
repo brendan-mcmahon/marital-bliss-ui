@@ -1,4 +1,6 @@
-<div [ngClass]="reward.status" class="card-container">
+<app-edit-reward *ngIf="editMode" (cardUpdated)="editReward()" [reward]="reward"></app-edit-reward>
+
+<div *ngIf="!editMode" [ngClass]="reward.status" class="card-container">
   <div class="card-header">
     <h4>{{reward.title}}</h4>
   </div>
@@ -13,7 +15,6 @@
     </div>
 
     <div *ngIf="buttonPhase === 'pending'" class="button-group">
-      <!-- <button class="mb-btn-primary" *ngIf="reward.status === 'pending' || reward.status === 'rejected'" (click)="chooseReward()">Pick this one!</button> -->
       <button class="mb-btn-primary" (click)="chooseReward()">Pick this one!</button>
     </div>
 
@@ -28,7 +29,7 @@
     </div>
 
     <div *ngIf="buttonPhase === 'edit'" class="button-group">
-      <button class="btn-tertiary" (click)="editReward()">Edit</button>
+      <button class="btn-tertiary" (click)="editMode = true">Edit</button>
       <button *ngIf="reward.status === 'enabled'" class="mb-btn-secondary" [ngClass]="buttonStyle" (click)="disableReward()">Remove</button>
       <button *ngIf="reward.status === 'disabled'" class="mb-btn-primary" [ngClass]="buttonStyle"  (click)="enableReward()">Add</button>
     </div>

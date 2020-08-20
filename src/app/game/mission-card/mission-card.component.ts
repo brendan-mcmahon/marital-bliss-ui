@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange, DoCheck } from '@angular/core';
 import { Card } from 'src/app/models/card';
-import { ApiService } from 'src/app/api.service';
-import { MatchService } from 'src/app/match.service';
+import { ApiService } from 'src/app/services/api.service';
+import { MatchService } from 'src/app/services/match.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mission-card',
@@ -15,10 +16,12 @@ export class MissionCardComponent implements OnInit, DoCheck {
 
   @Output() cardStatusUpdated = new EventEmitter<boolean>();
   @Output() cardGuessed = new EventEmitter<any>();
+  @Output() editCard = new EventEmitter<Card>();
   acceptButtonStyle = '';
   rejectButtonStyle = '';
+  editMode = false;
 
-  constructor(private apiService: ApiService, private matchService: MatchService) { }
+  constructor(private apiService: ApiService, private matchService: MatchService, private router: Router) { }
 
   ngDoCheck() {
     if (this.card.status === 'accepted') {
@@ -62,10 +65,6 @@ export class MissionCardComponent implements OnInit, DoCheck {
     this.rejectButtonStyle = '';
   }
 
-  editMission() {
-
-  }
-
   disableMission() {
     this.apiService.requestEdit('mission', this.matchService.getMatch().id, this.card.id, 'disable', 'disabled')
       .subscribe(r => {
@@ -78,6 +77,10 @@ export class MissionCardComponent implements OnInit, DoCheck {
       .subscribe(r => {
         this.cardStatusUpdated.emit(false);
       });
+  }
+
+  editMission() {
+    this.cardStatusUpdated.emit(true);
   }
 
   guess() {

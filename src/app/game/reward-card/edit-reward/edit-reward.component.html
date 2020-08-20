@@ -1,0 +1,41 @@
+<form (ngSubmit)="onSubmit()" #rewardForm="ngForm" class="card-container">
+  <div class="card-header">
+    <div class="title mb-form-group">
+      <label for="Title">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        [(ngModel)]="reward.title"
+        name="title"
+        autocomplete="off"
+        required
+      />
+    </div>
+  </div>
+
+    <div class="card-body">
+      <div class="card-body-inner">
+        <div class="mb-form-group description">
+          <label for="Description">Description</label>
+          <textarea
+            type="text"
+            class="form-control"
+            id="description"
+            [(ngModel)]="reward.description"
+            name="description"
+            required
+          ></textarea>
+        </div>
+      </div>
+      <div class="button-group">
+        <button
+          type="submit"
+          class="mb-btn-primary"
+          [disabled]="!rewardForm.form.valid"
+        >
+          Submit
+        </button>
+      </div>
+  </div>
+</form>

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 // tslint:disable-next-line:max-line-length
 import { faBars, faTimes, faChevronDown, faChevronUp, faChevronRight, faUsers, faUser, faBell, faBug } from '@fortawesome/free-solid-svg-icons';
-import { MatchService } from '../match.service';
+import { MatchService } from '../services/match.service';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -21,6 +21,8 @@ export class MenuComponent implements OnInit {
   person = faUser;
   bell = faBell;
   bug = faBug;
+  notificationCount: number;
+  playerName: string;
 
   hasMatch = false;
   showMenu = false;
@@ -32,15 +34,19 @@ export class MenuComponent implements OnInit {
   constructor(public matchService: MatchService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
-    this.matchService.matchUpdate$.subscribe(u => {
+    this.matchService.player$.subscribe(p => { if (p) { this.playerName = p.firstName; }});
+    this.matchService.match$.subscribe(u => {
       this.hasMatch = this.matchService.getMatch() !== null;
       console.log('match updated');
-  });
+    });
     this.matchService.pokeMatch();
-}
+    this.matchService.notification$.refreshAndSubscribe(n => {
+      this.notificationCount = n ? n.length : null;
+    });
+    this.matchService.notification$.refresh();
+  }
 
   toggleMenu() {
-    console.log('toggling menu');
     this.showMenu = !this.showMenu;
   }
 

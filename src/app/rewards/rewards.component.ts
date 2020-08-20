@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Reward } from '../models/reward';
-import { ApiService } from '../api.service';
-import { MatchService } from '../match.service';
-import { Router } from '@angular/router';
-import { GesturesService } from '../gestures.service';
+import { ApiService } from '../services/api.service';
+import { MatchService } from '../services/match.service';
+import { GesturesService } from '../services/gestures.service';
 
 @Component({
   selector: 'app-rewards',
@@ -19,7 +18,6 @@ export class RewardsComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     public matchService: MatchService,
-    private router: Router,
     private gestureService: GesturesService) { }
 
   ngOnInit() {
@@ -31,14 +29,15 @@ export class RewardsComponent implements OnInit {
   }
 
   private getData() {
-    if (this.matchService.getMatch() === null) {
-      console.warn('No match selected');
+    if (this.matchService.match$.value) {
+      this.apiService.getMatchRewards(this.matchService.getMatch().id)
+        .subscribe(r => {
+          this.playerCards = [...r.filter(c => c.playerId === this.matchService.player$.value.id)];
+          this.opponentCards = [...r.filter(c => c.playerId === this.matchService.getOpponent().id)];
+          this.loading = false;
+        });
+    } else {
+      this.loading = false;
     }
-    this.apiService.getMatchRewards(this.matchService.getMatch().id)
-      .subscribe(r => {
-        this.playerCards = [...r.filter(c => c.playerId === this.matchService.getPlayer().id)];
-        this.opponentCards = [...r.filter(c => c.playerId === this.matchService.getOpponent().id)];
-        this.loading = false;
-      });
   }
 }

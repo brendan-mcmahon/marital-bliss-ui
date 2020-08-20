@@ -1,9 +1,9 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { AuthService } from 'src/app/auth.service';
-import { UserLogin } from 'src/app/user-login';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { UserLogin } from 'src/app/models/user-login';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/api.service';
-import { MatchService } from 'src/app/match.service';
+import { ApiService } from 'src/app/services/api.service';
+import { MatchService } from 'src/app/services/match.service';
 import { Match } from 'src/app/models/match';
 
 @Component({

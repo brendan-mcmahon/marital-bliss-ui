@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Match } from './models/match';
+import { Match } from '../models/match';
 import { Observable, throwError } from 'rxjs';
-import { Game } from './models/game';
+import { Game } from '../models/game';
 import { HttpClient } from '@angular/common/http';
-import { Player } from './models/player';
-import { Card } from './models/card';
-import { Guess } from './models/guess';
-import { Reward } from './models/reward';
+import { Player } from '../models/player';
+import { Card } from '../models/card';
+import { Guess } from '../models/guess';
+import { Reward } from '../models/reward';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Notification } from './models/notification';
-import { EndGameSummary } from './models/EndGameSummary';
+import { Notification } from '../models/notification';
+import { EndGameSummary } from '../models/EndGameSummary';
 
 @Injectable({
   providedIn: 'root'
@@ -125,5 +125,13 @@ export class ApiService {
 
   getRewardFromDeck(rewardId: number): Observable<Reward> {
     return this.http.get<Reward>(`${this.baseUrl}/match/reward/${rewardId}`);
+  }
+
+  upsertMission(matchId: number, mission: Card): Observable<Card> {
+    return this.http.put<Card>(`${this.baseUrl}/game/missiondeck`, { matchId, mission });
+  }
+
+  upsertReward(matchId: number, reward: Reward): Observable<Reward> {
+    return this.http.put<Reward>(`${this.baseUrl}/game/rewarddeck`, { matchId, reward });
   }
 }

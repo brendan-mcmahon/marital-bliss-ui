@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Notification } from 'src/app/models/notification';
-import { ApiService } from 'src/app/api.service';
+import { ApiService } from 'src/app/services/api.service';
 import { Card } from 'src/app/models/card';
 import { Reward } from 'src/app/models/reward';
 
@@ -20,7 +20,10 @@ export class EditNotificationComponent implements OnInit {
 
   stage: string;
   mission: Card;
+  newMission: Card;
   reward: Reward;
+  newReward: Reward;
+  before = true;
 
   constructor(private apiService: ApiService) { }
 
@@ -28,12 +31,42 @@ export class EditNotificationComponent implements OnInit {
     this.stage = this.notification.status === 'pending-approval' ? 'approve' : 'acknowledge';
     if (this.missionEntityTypes.includes(this.notification.entityType)) {
       this.apiService.getMissionFromDeck(this.notification.entityId)
-        .subscribe(m => this.mission = m);
+        .subscribe(m => {
+          this.mission = {...m};
+          if (this.notification.action === 'edit' && this.notification.entityType === 'mission') {
+            this.consolidateMission(m);
+          }
+        });
     } else if (this.rewardEntityTypes.includes(this.notification.entityType)) {
       console.log('getting reward...');
       this.apiService.getRewardFromDeck(this.notification.entityId)
-        .subscribe(r => this.reward = r);
+        .subscribe(r => {
+          this.reward = {...r};
+          if (this.notification.action === 'edit' && this.notification.entityType === 'reward') {
+            this.consolidateReward(r);
+          }
+        });
     }
+  }
+
+  private consolidateReward(r: Reward) {
+    this.before = false;
+    this.newReward = { ...r };
+    this.notification.fields.forEach(f => {
+      this.newReward[f.field] = f.newValue;
+    });
+  }
+
+  private consolidateMission(m: Card) {
+    this.before = false;
+    this.newMission = { ...m };
+    this.notification.fields.forEach(f => {
+      this.newMission[f.field] = f.newValue;
+    });
+  }
+
+  toggleEditView() {
+    this.before = !this.before;
   }
 
   close() {
@@ -43,6 +76,7 @@ export class EditNotificationComponent implements OnInit {
   accept() {
     this.apiService.updateEditStatus(this.notification.entityType, this.notification.id, 'accepted')
       .subscribe(r => {
+        console.log('notification accepted');
         this.notification.status = 'accepted';
         this.responseTrigger.emit({ notification: this.notification, response: r });
       });
@@ -58,9 +92,9 @@ export class EditNotificationComponent implements OnInit {
 
   acknowledge() {
     this.apiService.updateEditStatus(this.notification.entityType, this.notification.id, 'acknowledged')
-    .subscribe(r => {
-      this.notification.status = 'acknowledged';
-      this.responseTrigger.emit({ notification: this.notification, response: r });
-    });
+      .subscribe(r => {
+        this.notification.status = 'acknowledged';
+        this.responseTrigger.emit({ notification: this.notification, response: r });
+      });
   }
 }

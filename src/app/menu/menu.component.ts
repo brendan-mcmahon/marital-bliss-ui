@@ -35,8 +35,9 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.matchService.player$.subscribe(p => { if (p) { this.playerName = p.firstName; }});
-    this.matchService.match$.subscribe(u => {
-      this.hasMatch = this.matchService.getMatch() !== null;
+    this.matchService.match$.refreshAndSubscribe(m => {
+      this.hasMatch = !!m;
+      // this.hasMatch = this.matchService.getMatch() !== null;
       console.log('match updated');
     });
     this.matchService.pokeMatch();

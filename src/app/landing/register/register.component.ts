@@ -11,7 +11,8 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class RegisterComponent implements OnInit {
 
-  @Output() cancel = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter<string>();
+  errorMessage: string;
 
   constructor(private authService: AuthService, private apiService: ApiService, private router: Router) { }
 
@@ -24,14 +25,21 @@ export class RegisterComponent implements OnInit {
         this.authService.loggedInUser$.next(user);
         this.router.navigate(['Game']);
       });
+    },
+    error => {
+      if (error.status === 409) {
+        this.errorMessage = 'There is already a user with this email. Did you mean to log in?';
+      } else {
+        this.errorMessage = 'Something went wrong... try again later.';
+      }
     });
   }
 
   ngOnInit() {
   }
 
-  emitCancel(){
-    this.cancel.emit();
+  emitCancel() {
+    this.cancel.emit('login');
   }
 
 }

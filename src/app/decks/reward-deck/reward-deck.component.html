@@ -6,16 +6,10 @@
 
   <div *ngIf="showDeck" class="filters">
     <div class="search-field">
-      <input autofocus placeholder="Type to filter" type="text" [(ngModel)]="filterText" (keyup)="filterDisplay()">
+      <input appFocus placeholder="Type to filter" type="text" [(ngModel)]="filterText" (keyup)="filterDisplay()">
     </div>
 
-    <div class="checkbox-container">
-      <label class="checkbox-label">
-          <input (change)="toggleShowRemoved()" type="checkbox">
-          <span class="checkbox-custom rectangular"></span>
-      </label>
-      <div class="input-title">Show removed rewards</div>
-    </div>
+    <app-checkbox [label]="'Show removed rewards'" (onCheck)="toggleShowRemoved()"></app-checkbox>
 
     <button class="mb-btn-primary" (click)="createNew()" >Create New Reward</button>
   </div>

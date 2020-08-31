@@ -43,6 +43,10 @@ import { LoadingComponent } from './loading/loading.component';
 import { EditMissionComponent } from './game/mission-card/edit-mission/edit-mission.component';
 import { EditRewardComponent } from './game/reward-card/edit-reward/edit-reward.component';
 import { EndgameAlertComponent } from './game/endgame/endgame-alert/endgame-alert.component';
+import { CheckboxComponent } from './checkbox/checkbox.component';
+import { FireworksComponent } from './fireworks/fireworks.component';
+import { ForgotPasswordComponent } from './landing/forgot-password/forgot-password.component';
+import { FocusDirective } from './focus.directive';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = {
@@ -82,6 +86,10 @@ export class MyHammerConfig extends HammerGestureConfig {
     EditMissionComponent,
     EditRewardComponent,
     EndgameAlertComponent,
+    CheckboxComponent,
+    FireworksComponent,
+    ForgotPasswordComponent,
+    FocusDirective,
   ],
   imports: [
     BrowserModule,

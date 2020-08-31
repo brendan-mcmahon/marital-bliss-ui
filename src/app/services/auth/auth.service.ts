@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserRegistration } from '../../models/user-registration';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { UserLogin } from '../../models/user-login';
 import { shareReplay, tap } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -48,6 +48,7 @@ export class AuthService {
   }
 
   logout() {
+    console.log('logging out from auth service');
     localStorage.removeItem('id_token');
     localStorage.removeItem('currentMatch');
     this.isLoggedIn$.next(false);

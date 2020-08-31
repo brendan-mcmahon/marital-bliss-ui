@@ -8,6 +8,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 export class AlertComponent implements OnInit {
 
   @Input() text: string;
+  @Input() buttonText: string;
   @Output() closeTrigger = new EventEmitter<any>();
 
   constructor() { }
@@ -15,7 +16,7 @@ export class AlertComponent implements OnInit {
   ngOnInit() {
   }
 
-  close(){
+  close() {
     this.closeTrigger.emit();
   }
 

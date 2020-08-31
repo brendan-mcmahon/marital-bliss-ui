@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { MatchService } from '../services/match.service';
@@ -11,22 +11,26 @@ import { GesturesService } from '../services/gestures.service';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
 
   displayStatus = 'new';
   timeRemaining: number;
   loading = true;
   bsModalRef: BsModalRef;
 
-  constructor(
+  constructor (
     public matchService: MatchService,
     private router: Router,
     private apiService: ApiService,
     private modalService: BsModalService,
     private gestureService: GesturesService) { }
 
+  ngOnDestroy(): void {
+    this.matchService.match$.unsubscribe();
+  }
+
   ngOnInit() {
-    this.matchService.match$.subscribe(m => {
+    this.matchService.match$.refreshAndSubscribe(m => {
       if (m) { this.getMostRecentGame(); }
     });
     this.gestureService.refresh$.subscribe(_ => {
@@ -41,14 +45,14 @@ export class GameComponent implements OnInit {
       this.getMostRecentGame();
     } else {
       this.loading = false;
-      // this.router.navigate(['Game']);
     }
   }
 
   private getMostRecentGame() {
+    console.log(`Getting MRG from getMatch() ${this.matchService.getMatch().id}`);
+    console.log(`Getting MRG from match$ ${this.matchService.match$.value.id}`);
     this.apiService.getMostRecentGame(this.matchService.getMatch().id)
       .subscribe(g => {
-        // console.log(JSON.stringify(g));
         this.loading = false;
         if (g) {
           this.matchService.setGame(g);
@@ -67,7 +71,7 @@ export class GameComponent implements OnInit {
     const initialState = {
       text
     };
-    this.bsModalRef = this.modalService.show(AlertComponent, {initialState});
+    this.bsModalRef = this.modalService.show(AlertComponent, { initialState });
     this.bsModalRef.content.closeTrigger.subscribe((value: any) => {
       this.bsModalRef.hide();
     });
@@ -79,8 +83,8 @@ export class GameComponent implements OnInit {
 
   readyToStart() {
     return (this.matchService.getGame().playerOneHand.every(h => h.status !== 'pending')
-    && this.matchService.getGame().playerOneRewards.every(r => r.status !== 'pending')
-    && this.matchService.getGame().status !== 'in progress');
+      && this.matchService.getGame().playerOneRewards.every(r => r.status !== 'pending')
+      && this.matchService.getGame().status !== 'in progress');
   }
 
   updateMissionStatus(isAccepted: boolean, index: number) {
@@ -99,16 +103,16 @@ export class GameComponent implements OnInit {
 
   startGame() {
     this.apiService.startGame(
-        this.matchService.getGame().id,
-        this.matchService.getGame().playerOneHand.filter(c => c.status === 'accepted').map(c => c.id),
-        this.matchService.getGame().playerOneRewards.filter(r => r.status === 'accepted')[0].id)
-      .subscribe(game => this.matchService.setGame(game) );
+      this.matchService.getGame().id,
+      this.matchService.getGame().playerOneHand.filter(c => c.status === 'accepted').map(c => c.id),
+      this.matchService.getGame().playerOneRewards.filter(r => r.status === 'accepted')[0].id)
+      .subscribe(game => this.matchService.setGame(game));
   }
 
   getGameStatus(): string {
     if (this.matchService.getGame().status === 'pending') {
       if (this.matchService.getGame().playerOneHand.every(h => h.status !== 'pending')
-      && this.matchService.getGame().playerOneRewards.every(r => r.status !== 'pending')) {
+        && this.matchService.getGame().playerOneRewards.every(r => r.status !== 'pending')) {
         return 'pending';
       } else {
         return 'new';

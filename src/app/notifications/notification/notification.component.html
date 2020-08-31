@@ -3,7 +3,6 @@
   <div class="modal-header">
     <div class="modal-title pull-left">
       <h4>{{notification.body}}</h4>
-      <p>{{stage}}</p>
       <p class="notification-date">{{notification.createdOn | date}}</p>
     </div>
     <button type="button" class="mb-btn-secondary close-button" aria-label="Close" (click)="close()"><span>&times;</span></button>
@@ -14,7 +13,7 @@
         Do you accept?
       </p>
 
-      <div *ngIf="(notification.entityType === 'mission' || notification.entityType === 'reward') && notification.action === 'edit'" class="edit-buttons">
+      <div *ngIf="showBeforeAndAfter()" class="edit-buttons">
         <button class="btn-tertiary" [ngClass]="{'depressed-tertiary': before }" (click)="toggleEditView()">Original</button>
         <button class="btn-tertiary" [ngClass]="{'depressed-tertiary': !before }" (click)="toggleEditView()">Edited</button>
       </div>

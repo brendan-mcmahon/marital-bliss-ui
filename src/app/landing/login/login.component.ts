@@ -13,10 +13,11 @@ import { Match } from 'src/app/models/match';
 })
 export class LoginComponent implements OnInit {
 
-  @Output() cancel = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter<string>();
+  @Output() forgotPassword = new EventEmitter<any>();
   errorMessage: string;
 
-  constructor (
+  constructor(
     private router: Router,
     private apiService: ApiService,
     private matchService: MatchService,
@@ -42,6 +43,8 @@ export class LoginComponent implements OnInit {
           console.log(`${JSON.stringify(error)}`);
           if (error.status === 401) {
             this.errorMessage = 'Your username or password were not correct. Please try again.';
+          } else {
+            this.errorMessage = 'Something went wrong... try again later.';
           }
         });
   }
@@ -58,6 +61,10 @@ getDefaultMatch(matches: Match[]) {
 
 emitCancel() {
   this.cancel.emit();
+}
+
+forgotPasswordTrigger() {
+  this.forgotPassword.emit('registration');
 }
 
 ngOnInit() { }

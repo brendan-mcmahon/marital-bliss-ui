@@ -13,6 +13,7 @@ export class LandingComponent implements OnInit {
 
   showLogin = true;
   showRegistration = false;
+  showForgotPassword = false;
 
   constructor(
     private router: Router,
@@ -32,8 +33,16 @@ export class LandingComponent implements OnInit {
       }
   }
 
-  toggleAction() {
-    this.showLogin = !this.showLogin;
-    this.showRegistration = !this.showRegistration;
+  showForm(form: string) {
+    console.log(form);
+    this.showLogin = false;
+    this.showRegistration = false;
+    this.showForgotPassword = false;
+    const map = {
+      login: () => this.showLogin = true,
+      registration: () => this.showRegistration = true,
+      forgotPassword: () => this.showForgotPassword = true
+    };
+    map[form]();
   }
 }

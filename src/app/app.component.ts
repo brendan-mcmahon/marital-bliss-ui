@@ -30,10 +30,13 @@ export class AppComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    this.matchService.match$.subscribe(m => this.hasMatch = m !== null);
-    this.authService.isLoggedIn$.subscribe(i => this.loggedIn = i);
-    this.apiService.getAllMatches().subscribe(m => {
-      this.matchService.setMatches(m);
+    console.log(this.loggedIn);
+    this.matchService.match$.refreshAndSubscribe(m => this.hasMatch = m !== null);
+    this.authService.isLoggedIn$.subscribe(i => {
+      this.loggedIn = i;
+      this.apiService.getAllMatches().subscribe(m => {
+        this.matchService.setMatches(m);
+      });
     });
   }
 

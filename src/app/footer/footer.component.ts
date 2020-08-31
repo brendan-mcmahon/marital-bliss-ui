@@ -21,7 +21,7 @@ export class FooterComponent implements OnInit {
   ngOnInit() {
     this.authService.isLoggedIn$.subscribe(loggedIn => {
       this.displayFooter = loggedIn;
-      console.log('logged in update');
+      console.log(`logged in update: ${loggedIn}`);
     });
     this.activeRoute = this.router.url.substring(1);
   }

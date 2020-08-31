@@ -5,7 +5,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AlertComponent } from '../../alert/alert.component';
 import { Reward } from 'src/app/models/reward';
 import { RewardCardComponent } from 'src/app/game/reward-card/reward-card.component';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { EditRewardComponent } from 'src/app/game/reward-card/edit-reward/edit-reward.component';
 import { GesturesService } from 'src/app/services/gestures.service';
 
@@ -19,6 +19,7 @@ export class RewardDeckComponent implements OnInit {
   modalRef: BsModalRef;
   chevronDown = faChevronDown;
   chevronUp = faChevronUp;
+  check = faCheck;
 
   showDeck = false;
   public deck: Reward[];

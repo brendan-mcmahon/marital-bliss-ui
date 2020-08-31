@@ -97,4 +97,9 @@ export class EditNotificationComponent implements OnInit {
         this.responseTrigger.emit({ notification: this.notification, response: r });
       });
   }
+
+  showBeforeAndAfter() {
+    return ((this.notification.entityType === 'mission' || this.notification.entityType === 'reward')
+    && this.notification.action === 'edit') && this.stage !== 'acknowledge';
+  }
 }

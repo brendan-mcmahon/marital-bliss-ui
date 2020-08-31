@@ -31,6 +31,7 @@ export class MatchesComponent implements OnInit {
     private authService: AuthService) {}
 
   ngOnInit() {
+    console.log(`opening matches for ${this.matchService.player$.value}`);
     this.matchService.matches$.refreshAndSubscribe(m => this.matches = m);
   }
 

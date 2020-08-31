@@ -23,13 +23,26 @@ export class RewardListComponent implements OnInit {
   constructor(public matchService: MatchService) { }
 
   ngOnInit() {
+    if (this.cards) {
+      this.populateDisplay();
+    }
+  }
+
+  private populateDisplay() {
+    this.cardsDisplay = this.showDelivered
+      ? [...this.cards]
+      : [...this.cards.filter(md => md.status === 'undelivered')];
   }
 
   toggleShowDelivered() {
     console.log(`toggle show delivered ${this.showDelivered}`);
     this.showDelivered = !this.showDelivered;
-    this.cardsDisplay = this.showDelivered
-      ? [...this.cards]
-      : [...this.cards.filter(md => md.status === 'undelivered')];
+    this.populateDisplay();
+  }
+
+  toggleShowRewards() {
+    console.log(`toggle show rewards ${this.showRewards}`);
+    this.showRewards = !this.showRewards;
+    this.populateDisplay();
   }
 }

@@ -4,7 +4,7 @@ import { Game } from '../models/game';
 import { Router } from '@angular/router';
 import { Player } from '../models/player';
 import { AuthService } from './auth/auth.service';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Card } from '../models/card';
 import { ApiService } from './api.service';
 import { Reward } from '../models/reward';
@@ -16,40 +16,59 @@ import { Notification } from '../models/notification';
 })
 export class MatchService {
 
-  notificationGetter = (() => { console.log('getting notifications'); return this.apiService.getNotifications(); });
-
   public matches: Match[];
   public match: Match;
   public matches$ = new RefreshingSubject<Match[]>(null, () => this.apiService.getAllMatches());
-  public match$ = new BehaviorSubject<number>(null);
+  // public match$ = new BehaviorSubject<number>(null);
+  public match$ = new RefreshingSubject<Match>(null, () => this.getMatchOb());
   public player$ = new BehaviorSubject<Player>(null);
   public missionDeck$ = new RefreshingSubject<Card[]>(null, () => this.apiService.getMissionDeck(this.getMatch().id));
   public rewardDeck$ = new RefreshingSubject<Reward[]>(null, () => this.apiService.getRewardDeck(this.getMatch().id));
-  // public notification$ = new RefreshingSubject<Notification[]>(null, () => this.apiService.getNotifications());
-  public notification$ = new RefreshingSubject<Notification[]>(null, this.notificationGetter);
-
+  public notification$ = new RefreshingSubject<Notification[]>(null, () => this.apiService.getNotifications());
 
   constructor(private router: Router, private authService: AuthService, private apiService: ApiService) {
-    this.authService.loggedInUser$.refreshAndSubscribe(u => this.player$.next(u));
-   }
+    this.authService.isLoggedIn$.subscribe(loggedIn => {
+      console.log(`isLoggedIn$ Update: ${loggedIn === true}`);
+      if (loggedIn === true) {
+        this.authService.loggedInUser$.refreshAndSubscribe(u => this.player$.next(u));
+        this.match$.next(null);
+        this.missionDeck$.refresh();
+        this.rewardDeck$.refresh();
+        this.notification$.refresh();
+        this.matches$.refresh();
+        console.log(`logged in and refreshed`);
+      } else {
+        console.log('logged out!!!!');
+        this.match$.next(null);
+        this.player$.next(null);
+        this.missionDeck$.next([]);
+        this.rewardDeck$.next([]);
+        this.notification$.next([]);
+        this.matches$.next([]);
+        console.log(`I JUST FUCKING LOGGED OUT SO THIS SHOULD BE NULL: match id: ${JSON.stringify(this.match$.value)}`);
+      }
+    });
+  }
+
+  getMatchOb(): Observable<Match> {
+    return of(this.getMatch());
+  }
 
   public getMatch(): Match {
     if (!this.match) {
       if (localStorage.getItem('currentMatch') && localStorage.getItem('currentMatch') !== 'undefined') {
         this.match = JSON.parse(localStorage.getItem('currentMatch'));
       } else {
-        // What if there is no game?!
-        // Can we just alert or something? This is really annoying.
-        // this.router.navigate(['Matches']);
         return null;
       }
     }
+    // console.log(`got match: ${this.match.id}`);
     return this.match;
   }
 
   public pokeMatch() {
     if (this.getMatch()) {
-      this.match$.next(this.match.id);
+      this.match$.next(this.match);
     }
   }
 
@@ -72,7 +91,7 @@ export class MatchService {
 
   setMatch(match: Match) {
     this.match = match;
-    this.match$.next(this.match.id);
+    this.match$.next(this.match);
     localStorage.setItem('currentMatch', JSON.stringify(this.match));
   }
 

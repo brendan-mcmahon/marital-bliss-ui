@@ -2,6 +2,9 @@
   <div class="container">
     <h1>Register</h1>
     <form (ngSubmit)="register()" #registrationForm="ngForm">
+
+      <p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
+
       <div class="form-group">
         <label for="model.firstName">First Name</label>
         <input autofocus

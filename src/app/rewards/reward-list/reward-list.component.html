@@ -1,17 +1,11 @@
 <div class="page-header">
-  <div (click)="showRewards = !showRewards" class="reward-header">
+  <div (click)="toggleShowRewards()" class="reward-header">
     <h2>{{name}} Rewards</h2>
     <fa-icon *ngIf="showRewards" [icon]="chevronUp"></fa-icon>
     <fa-icon *ngIf="!showRewards" [icon]="chevronDown"></fa-icon>
   </div>
 
-  <div *ngIf="showRewards" class="checkbox-container">
-    <label class="checkbox-label">
-        <input autofocus (change)="toggleShowDelivered()" type="checkbox">
-        <span class="checkbox-custom rectangular"></span>
-    </label>
-    <div class="input-title">Show delivered rewards</div>
-  </div>
+  <app-checkbox *ngIf="showRewards" [label]="'Show delivered rewards'" (onCheck)="toggleShowDelivered()"></app-checkbox>
 
 </div>
 <div *ngIf="showRewards">

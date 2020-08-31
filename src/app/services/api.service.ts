@@ -26,6 +26,7 @@ export class ApiService {
   }
 
   getAllMatches(): Observable<Match[]> {
+    console.log('getting matches from api');
     return this.http.get<Match[]>(`${this.baseUrl}/match`);
   }
 
@@ -133,5 +134,14 @@ export class ApiService {
 
   upsertReward(matchId: number, reward: Reward): Observable<Reward> {
     return this.http.put<Reward>(`${this.baseUrl}/game/rewarddeck`, { matchId, reward });
+  }
+
+  submitPasswordResetRequest(email: string): Observable<any> {
+    console.log('requesting password reset');
+    return this.http.post<any>(`${this.baseUrl}/account/reset/request`, { email });
+  }
+
+  submitNewPassword(email: string, code: string, password: string, confirmPassword): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/account/reset/${code}`, { email, password, confirmPassword });
   }
 }

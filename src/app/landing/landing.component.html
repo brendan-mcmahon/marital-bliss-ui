@@ -1,4 +1,5 @@
 <div class="landing-container">
-  <app-login *ngIf="showLogin" (cancel)="toggleAction($event)"></app-login>
-  <app-register *ngIf="showRegistration" (cancel)="toggleAction($event)"></app-register>
+  <app-login *ngIf="showLogin" (forgotPassword)="showForm('forgotPassword')" (cancel)="showForm('registration')"></app-login>
+  <app-register *ngIf="showRegistration" (cancel)="showForm('login')"></app-register>
+  <app-forgot-password *ngIf="showForgotPassword" (cancel)="showForm('login')"></app-forgot-password>
 </div>

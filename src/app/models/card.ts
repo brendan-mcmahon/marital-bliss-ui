@@ -5,5 +5,6 @@ export class Card {
   browniepoint: string;
   pointvalue: number;
   browniepointvalue: number;
+  updatedate: Date;
   status: string;
 }

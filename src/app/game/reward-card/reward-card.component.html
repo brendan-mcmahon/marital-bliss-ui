@@ -1,7 +1,38 @@
-<div [ngClass]="reward.status" class="container">
-  <h2>{{reward.title}}</h2>
-  <p>{{reward.description}}</p>
+<app-edit-reward *ngIf="editMode" (cardUpdated)="editReward()" [reward]="reward"></app-edit-reward>
 
-  <button *ngIf="editable" (click)="acceptMission()">Pick this one!</button>
-  <p>{{reward.status}}</p>
+<div *ngIf="!editMode" [ngClass]="reward.status" class="card-container">
+  <div class="card-header">
+    <h4>{{reward.title}}</h4>
+  </div>
+  <div class="card-body">
+    <!-- <div class="image"></div> -->
+    <div class="card-body-inner">
+      <div class="description">
+        <h4>Your Reward:</h4>
+        <p>{{reward.description}}</p>
+        <!-- <p>{{reward.status}}</p> -->
+      </div>
+    </div>
+
+    <div *ngIf="buttonPhase === 'pending'" class="button-group">
+      <button class="mb-btn-primary" (click)="chooseReward()">Pick this one!</button>
+    </div>
+
+    <div *ngIf="buttonPhase === 'view-player'" class="button-group">
+      <button class="mb-btn-primary" *ngIf="reward.status === 'undelivered'" (click)="complete()">Accept delivery</button>
+      <p *ngIf="reward.status === 'delivered'" class="delivered">Delivered on <span>{{reward.deliveryDate | date}}</span></p>
+    </div>
+
+    <div class="delivery-date" *ngIf="buttonPhase ==='view-opponent'">
+      <p *ngIf="reward.status === 'delivered'" class="delivered">Delivered on <span>{{reward.deliveryDate | date}}</span></p>
+      <p *ngIf="reward.status !== 'delivered'" class="undelivered">Not yet delivered!</p>
+    </div>
+
+    <div *ngIf="buttonPhase === 'edit'" class="button-group">
+      <button class="btn-tertiary" (click)="editMode = true">Edit</button>
+      <button *ngIf="reward.status === 'enabled'" class="mb-btn-secondary" [ngClass]="buttonStyle" (click)="disableReward()">Remove</button>
+      <button *ngIf="reward.status === 'disabled'" class="mb-btn-primary" [ngClass]="buttonStyle"  (click)="enableReward()">Add</button>
+    </div>
+
+  </div>
 </div>

@@ -1,0 +1,6 @@
+<div class="checkbox-container">
+  <div class="checkbox" [ngClass]="{ 'checked': checked }" (click)="toggleCheck()">
+    <fa-icon *ngIf="checked" [icon]="check"></fa-icon>
+  </div>
+  <p class="input-title">{{label}}</p>
+</div>

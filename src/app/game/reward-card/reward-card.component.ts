@@ -1,36 +1,56 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Prize as Reward } from 'src/app/models/prize';
-import { ApiService } from 'src/app/api.service';
+import { Reward } from 'src/app/models/reward';
+import { ApiService } from 'src/app/services/api.service';
+import { MatchService } from 'src/app/services/match.service';
 
 @Component({
   selector: 'app-reward-card',
   templateUrl: './reward-card.component.html',
-  styleUrls: ['./reward-card.component.scss']
+  styleUrls: ['../card.scss', './reward-card.component.scss']
 })
 export class RewardCardComponent implements OnInit {
 
   @Input() reward: Reward;
-  @Input() editable: boolean;
+  @Input() buttonPhase: string;
   @Output() rewardStatusUpdated = new EventEmitter<boolean>();
   statusStyle = 'pending';
+  buttonStyle: string;
+  editMode = false;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private matchService: MatchService, private apiService: ApiService) { }
 
   ngOnInit() {
     this.statusStyle = this.reward.status;
   }
 
   complete() {
-    this.apiService.updateCardStatus(this.reward.id, 'complete')
-      .subscribe(newStatus => this.reward.status = newStatus.status);
+    this.apiService.updateRewardStatus(this.reward.id, 'delivered')
+      .subscribe(response => {
+        this.reward.status = response.status;
+        this.reward.deliveryDate = response.deliverydate;
+      });
   }
 
-  rejectMission() {
-    this.rewardStatusUpdated.emit(false);
-  }
-
-  acceptMission() {
+  chooseReward() {
+    this.buttonStyle = 'depressed-primary';
     this.rewardStatusUpdated.emit(true);
   }
 
+  editReward() {
+    this.rewardStatusUpdated.emit(true);
+  }
+
+  disableReward() {
+    this.apiService.requestEdit('reward', this.matchService.getMatch().id, this.reward.id, 'disable', 'disabled')
+      .subscribe(r => {
+        this.rewardStatusUpdated.emit(false);
+      });
+  }
+
+  enableReward() {
+    this.apiService.requestEdit('reward', this.matchService.getMatch().id, this.reward.id, 'enable', 'enabled')
+      .subscribe(r => {
+        this.rewardStatusUpdated.emit(false);
+      });
+  }
 }

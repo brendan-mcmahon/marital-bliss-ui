@@ -1,0 +1,45 @@
+@import "../variables.scss";
+
+.sub-header {
+  background-color: $pale-yellow;
+  color: $dark-red;
+  padding: 8px;
+  border-radius: 8px;
+  // border: solid $dark-red 2px;
+  margin-bottom: 16px;
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.page-header {
+  h2, h4 {
+    margin-bottom: 0;
+  }
+}
+
+.title {
+  padding: 16px;
+  background: $red;
+  border: solid $dark-red 2px;
+  border-radius: 8px;
+  margin: 16px;
+}
+
+.game-header > span {
+  font-size: .5em;
+}
+
+.new-game {
+  // font-family: small-header;
+  // font-size: 2em;
+  // height: 2em;
+}
+
+.vertical-centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  height: 70vh;
+}

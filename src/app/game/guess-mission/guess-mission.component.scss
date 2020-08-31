@@ -1,13 +1,53 @@
-.mission {
-  padding-top: 8px;
+@import "../../variables.scss";
+
+.filters {
+  background-color: $dark-blue;
+  padding: 8px;
+  border-radius: 8px;
+  margin: 16px;
+  border: solid $darkest-blue 2px;
+  .search-field {
+    display: flex;
+    justify-content: space-between;
+    input {
+      width: 100%;
+      color: black;
+      margin: 12px;
+    }
+  }
 }
 
-.mission:hover {
-  background-color: lightgreen;
-  color: white;
+.card-placeholder {
+  height: 225px;
+  background-color: white;
+  color: black;
+  border-radius: 8px;
+  margin: 16px;
+  max-width: 700px;
+  box-shadow: 0px 10px 8px 7px rgba(0, 0, 0, 0.5);
+  padding: 0;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.mission-selected {
-  background-color: green;
-  color: white;
+.mission-list {
+  background-color: $dark-blue;
+  border-radius: 8px;
+  border: solid $darkest-blue 2px;
+  margin: 8px 16px;
+  padding: 8px;
+  padding-top: 0px;
+  .mission {
+    padding: 12px 8px;
+    border-bottom: solid $darkest-blue 1px;
+    font-size: 1.1em;
+  }
+  .mission-selected {
+    background-color: $darkest-blue;
+  }
+  :last-child {
+    border: none;
+  }
 }

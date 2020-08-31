@@ -1,0 +1,27 @@
+@import "../variables.scss";
+
+.checkbox-container {
+  display: flex;
+  margin: 12px;
+  align-items: center;
+  .checkbox {
+    height: 36px;
+    width: 36px;
+    background: transparent;
+    border: solid $blue 2px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 12px;
+  }
+  .checked {
+    background: $blue;
+    border: solid $dark-blue 2px;
+  }
+  p {
+    margin: 0;
+    font-size: 1.25em
+  }
+  fa-icon {
+    font-size: 1.5em;
+  }
+}

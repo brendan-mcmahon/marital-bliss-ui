@@ -1,0 +1,43 @@
+@import "./variables.scss";
+
+app-menu {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+.gesture-container {
+  height: 100%;
+}
+
+.drawer-container {
+  margin-top: 100px
+}
+
+.action-group {
+  ul {
+    li {
+      list-style: none;
+      background-color: $pale-yellow;
+      border: solid $dark-red 2px;
+      border-bottom: none;
+      margin-bottom: 0;
+      margin-top: 0;
+      padding: 16px;
+      padding-left: 16px;
+      * {
+        text-decoration: none;
+        font-size: 2em;
+        color: $dark-red;
+        border-bottom: none;
+      }
+    }
+    :last-child {
+      border-bottom: solid $dark-red 2px;
+    }
+  }
+}
+
+.static-message {
+  margin-top: 75px;
+}

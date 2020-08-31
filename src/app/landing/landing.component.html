@@ -1,7 +1,5 @@
-<button (click)="showLogin=true; showRegistration=false;">Log In</button>
-<button (click)="showLogin=false; showRegistration=true;">Register</button>
-
-<app-login *ngIf="showLogin"></app-login>
-<app-register *ngIf="showRegistration"></app-register>
-
-<button *ngIf="showLogin || showRegistration" (click)="showLogin=false; showRegistration=false;">Go Back</button>
+<div class="landing-container">
+  <app-login *ngIf="showLogin" (forgotPassword)="showForm('forgotPassword')" (cancel)="showForm('registration')"></app-login>
+  <app-register *ngIf="showRegistration" (cancel)="showForm('login')"></app-register>
+  <app-forgot-password *ngIf="showForgotPassword" (cancel)="showForm('login')"></app-forgot-password>
+</div>

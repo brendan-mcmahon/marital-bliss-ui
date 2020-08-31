@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MatchService } from '../../match.service';
+import { MatchService } from '../../services/match.service';
 import { Card } from 'src/app/models/card';
-import { ApiService } from 'src/app/api.service';
+import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
+import { EndGameSummary } from 'src/app/models/EndGameSummary';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { RewardCardComponent } from '../reward-card/reward-card.component';
+import { Reward } from 'src/app/models/reward';
+import { EndgameAlertComponent } from './endgame-alert/endgame-alert.component';
 
 @Component({
   selector: 'app-endgame',
@@ -11,70 +16,72 @@ import { Router } from '@angular/router';
 })
 export class EndgameComponent implements OnInit {
 
+  loading = true;
   win: boolean;
-  playerOnePoints: number;
-  playerTwoPoints: number;
+  summary: EndGameSummary;
+  bsModalRef: BsModalRef;
+  winnerReward: Reward;
 
-  constructor(private apiService: ApiService, public matchService: MatchService, private router: Router) { }
+  constructor(
+    private apiService: ApiService,
+    public matchService: MatchService,
+    private router: Router,
+    private modalService: BsModalService) { }
 
   ngOnInit() {
+    this.apiService.getMostRecentGame(this.matchService.getMatch().id)
+      .subscribe(game => {
+        this.matchService.setGame(game);
 
-    this.apiService.getMatch(this.matchService.getMatch().id)
-      .subscribe(match => {
-        this.matchService.setMatch(match);
-      });
+        if (this.matchService.getGame().endOfGame === null || this.getTimeRemaining() > 0) {
+          console.log('Game\'s not over, redirecting to Game');
+          this.router.navigate([`Game`]);
+        } else {
+          this.apiService.endGame(this.matchService.getGame().id)
+            .subscribe(response => {
+              this.matchService.setGame(response.game);
+              this.summary = response.summary;
+              this.win = response.summary.winnerIds.includes(this.matchService.player$.value.id);
 
-    if (this.matchService.getGame().endOfGame !== null) {
-      if (this.getTimeRemaining() > 0) {
-            this.router.navigate([`Game`]);
-      }
-    }
+              this.winnerReward = this.win
+                ? this.matchService.getGame().playerOneRewards[0]
+                : this.matchService.getGame().playerTwoRewards[0];
 
-    this.playerOnePoints = this.getPoints(this.matchService.getGame().playerOneHand);
+              this.displayReward(this.winnerReward);
 
-    this.playerTwoPoints = this.getPoints(this.matchService.getGame().playerTwoHand);
-
-    this.apiService.getGuessedMissions(this.matchService.getGame().id)
-      .subscribe(guesses => {
-        guesses.filter(g => g.userId === this.matchService.getMatch().player.id).forEach(guess => {
-          this.playerOnePoints -= 1;
-        });
-
-        guesses.filter(g => g.userId === this.matchService.getMatch().opponent.id).forEach(guess => {
-          this.playerTwoPoints -= 1;
-        });
-      });
-
-    this.win = this.playerOnePoints > this.playerTwoPoints || this.playerOnePoints === this.playerTwoPoints;
-
-    if (this.matchService.getMatch().currentGame.status !== 'finished') {
-      // need to check this on the server side to make sure we're not making data changes on an already finished game
-      this.apiService.endGame(this.matchService.getGame().id,
-        this.win ? this.matchService.getMatch().player.id : this.matchService.getMatch().opponent.id)
-        .subscribe(g => this.matchService.setGame(g));
-      }
+              this.loading = false;
+            });
+        }
+    });
   }
 
-  private getPoints(cards: Card[]): number {
-    return cards.reduce((accumulator, currentCard) => {
-      switch (currentCard.status) {
-        case 'complete':
-              return accumulator + currentCard.pointvalue;
-        case 'brownie-complete':
-              return accumulator + currentCard.pointvalue + currentCard.browniepointvalue;
-        case 'incomplete' :
-              return accumulator - currentCard.pointvalue;
-        default:
-          return accumulator;
-      }
-    }, 0);
+
+  displayReward(reward: Reward) {
+    const initialState = {
+      reward,
+      win: this.win,
+      opponentName: this.matchService.getOpponent().firstName
+    };
+    this.bsModalRef = this.modalService.show(EndgameAlertComponent, {initialState});
+  }
+
+  getPointsDisplay(card: Card): string {
+    switch(card.status) {
+      case 'complete':
+        return `+ ${card.pointvalue}`;
+      case 'brownie-complete':
+        return `+ ${card.pointvalue + card.browniepointvalue}`;
+      case 'incomplete':
+        return `- ${card.pointvalue}`;
+      case 'guessed':
+        return '+ 0';
+    }
   }
 
   startNewGame() {
     this.apiService.addGame(this.matchService.getMatch().id)
       .subscribe(g => {
         this.matchService.setGame(g);
-        console.log(`new game: ${this.matchService.getGame().id}`);
         this.router.navigate(['Game']);
       });
   }

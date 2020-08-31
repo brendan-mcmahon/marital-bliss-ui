@@ -1,1 +1,212 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./bootstrap.css";
+@import "./Skeleton/css/normalize.css";
+@import "./Skeleton/css/skeleton.css";
+@import "./app/variables.scss";
+@import "./list.scss";
+
+@font-face {
+  font-family: header;
+  // src: url("../assets/fonts/AdvertisingScriptBold.ttf");
+  src: url("./assets/fonts/AdvertisingScriptBold.ttf");
+  // src: url("/assets/fonts/CherryCreamSoda.ttf");
+  // src: url("/assets/fonts/Cookie-Regular.ttf");
+}
+
+@font-face {
+  font-family: small-header;
+  /* src: url("/assets/fonts/AtomicAge-Regular.ttf"); */
+  src: url("./assets/fonts/CherryCreamSoda.ttf");
+  // src: url("/assets/fonts/AtomicAge-Regular.ttf");
+  // src: url("/assets/fonts/Cookie-Regular.ttf");
+}
+
+html {
+  height: 100%;
+  body {
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  min-width: 350px;
+}
+
+
+.modal-content {
+  background: none;
+  border: none;
+}
+
+.result-modal {
+  background-color: rgba(0, 0, 0, 0) !important;
+  border: none;
+  border: solid blue 2px;
+}
+
+.pure-toggle-label {
+  background-color: $pale-yellow;
+}
+
+h1, h2 {
+  font-family: small-header;
+  // text-shadow: 0px 0px 15px rgba(0,0,0,1);
+}
+
+h3, h4 {
+  font-family: small-header;
+}
+
+body {
+  // background-color: $blue;
+  color: white;
+  // color: #EFEBE0;
+  background-image: radial-gradient($dark-blue 15%, transparent 15%),
+      radial-gradient($dark-blue 15%, transparent 15%);
+  background-color: $blue;
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+}
+
+hr {
+  border-color: $dark-red;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+/* Sections
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.section {
+  // padding: 8px;
+  text-align: center;
+  margin-bottom: 100px;
+  margin-top: 86px;
+}
+.section-heading,
+.section-description {
+  margin-bottom: 1.2rem;
+}
+button {
+  border: none;
+  -webkit-box-shadow: 0px 11px 11px 0px rgba(0,0,0,0.34);
+  -moz-box-shadow: 0px 11px 11px 0px rgba(0,0,0,0.34);
+  box-shadow: 0px 11px 11px 0px rgba(0,0,0,0.34);
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    color: grey;
+    background: none;
+    border-color: darkslategrey;
+    background-color: lightgrey;
+    &:active, &:hover, &:focus {
+      color: grey;
+      border-color: darkslategrey;
+      background-color: lightgrey;
+    }
+  }
+}
+
+.link-button {
+  border: none;
+  -webkit-box-shadow: 0px 11px 11px 0px rgba(0,0,0,0.34);
+  -moz-box-shadow: 0px 11px 11px 0px rgba(0,0,0,0.34);
+  box-shadow: 0px 11px 11px 0px rgba(0,0,0,0.34);
+}
+
+.mb-btn-primary {
+  border: solid $dark-blue 2px;
+  border: none;
+  background-color: $blue;
+  color: $dark-blue;
+  background: linear-gradient(145deg, #90e6e5, #7ac2c1);
+  color: white;
+  &:not(:disabled):focus, &:not(:disabled):hover {
+    color: white;
+    box-shadow: inset 7px 7px 14px #649f9e,
+                inset -7px -7px 14px #aaffff;
+  }
+  &:not(:disabled):active, &:not(:disabled):not(.disabled):active:focus {
+    box-shadow: inset 13px 13px 26px #426969,
+                inset -13px -13px 26px #ccffff;
+  }
+}
+
+.sub-header {
+  background-color: $pale-yellow;
+  color: $dark-red;
+  padding: 8px;
+  border-radius: 8px;
+  // border: solid $dark-red 2px;
+  margin: 16px;
+}
+
+// I wonder if the &:not(:bullshit) needs to only be in the depressed class?
+.mb-btn-secondary {
+  background-color: $red;
+  color: $pale-yellow;
+  background: linear-gradient(145deg, #e53e2b, #c13424);
+  &:not(:disabled):focus, &:not(:disabled):hover {
+    color: $pale-yellow;
+    box-shadow: inset 7px 7px 14px #9e2b1e,
+                inset -7px -7px 14px #ff4932;
+  }
+  &:not(:disabled):not(.disabled):active:focus {
+    box-shadow: inset 13px 13px 26px #691c14,
+                inset -13px -13px 26px #ff583c;
+  }
+}
+
+.btn-tertiary {
+  background-color: $pale-yellow;
+  color: $dark-red;
+  background: linear-gradient(145deg, #fffac6, #e0d3a7);
+}
+
+.depressed-primary {
+  box-shadow: inset 7px 7px 14px #649f9e,
+              inset -7px -7px 14px #aaffff;
+}
+
+.depressed-secondary {
+  box-shadow: inset 7px 7px 14px #9e2b1e,
+              inset -7px -7px 14px #ff4932;
+}
+
+.depressed-tertiary {
+  color: $red;
+  box-shadow: inset 10px 10px 20px #c0b48e, inset -10px -10px 20px #ffffe4;
+  &:not(:disabled):focus, &:not(:disabled):hover {
+    color: $red;
+    box-shadow: inset 10px 10px 20px #c0b48e, inset -10px -10px 20px #ffffe4;
+  }
+  &:not(:disabled):active, &:not(:disabled):not(.disabled):active:focus {
+    color: $red;
+    box-shadow: inset 10px 10px 20px #c0b48e, inset -10px -10px 20px #ffffe4;
+  }
+}
+
+.page-header {
+  background-color: $red;
+  padding: 8px;
+  border: solid $dark-red 2px;
+  border-radius: 8px;
+  margin: 16px;
+  h1, h2 {
+    margin-bottom: 0;
+    font-size: 1.5em;
+  }
+  h3 {
+    font-size: 1.25em;
+  }
+}
+
+.static-message {
+  padding: 8px;
+  background: $pale-yellow;
+  color: $dark-red;
+  margin-left: 16px;
+  margin-right: 16px;
+  border-radius: 8px;
+  // border: solid $dark-red 2px;
+}

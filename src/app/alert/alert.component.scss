@@ -1,0 +1,9 @@
+@import "../variables.scss";
+
+.alert-container {
+  background-color: $pale-yellow;
+  color: $dark-red;
+  margin: 32px;
+  padding: 12px;
+  border-radius: 8px;
+}

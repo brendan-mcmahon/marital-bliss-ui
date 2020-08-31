@@ -1,0 +1,86 @@
+@import "../../../variables.scss";
+
+.summary-table {
+  display: flex;
+  flex-direction: column;
+  background-color: $pale-yellow;
+  border-radius: 8px;
+  margin: 16px;
+  justify-content: space-between;
+  padding: 8px;
+  hr {
+    margin: 12px 12px;
+    height: 2px;
+    background-color: black;
+  }
+  h3 {
+    color: black;
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
+  .summary {
+    display :flex;
+    justify-content: space-between;
+    margin: 4px 8px;
+    align-items: center;
+    padding: 8px;
+    border-radius: 8px;
+    p {
+      font-size: 1.1em;
+      font-weight: bold;
+      margin: 0;
+      text-align: left;
+    }
+    .points {
+      min-width: 48px;
+      font-size: 1.5em;
+      padding: 8px;
+      border-radius: 8px;
+      text-align: center;
+      // background-color: $blue;
+    }
+  }
+  .summary-item {
+    // background-color: $blue;
+
+  }
+  .total {
+    background-color: $blue;
+    padding: 8px;
+    border-radius: 8px;
+    margin: 4px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span {
+      background-color: $dark-blue;
+      padding: 12px;
+      border-radius: 8px;
+    }
+  }
+}
+
+p.incorrect, p.incomplete {
+  background-color: $dark-red;
+}
+
+.incomplete, div.incorrect {
+  background-color: $red;
+}
+
+p.guessed {
+  background-color: $dark-yellow;
+}
+
+div.guessed {
+  background-color: $yellow;
+}
+
+p.complete, p.brownie-complete, p.correct {
+  background-color: darkgreen;
+}
+
+
+.complete, .brownie-complete, .correct {
+  background-color: green;
+}

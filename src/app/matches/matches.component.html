@@ -1,0 +1,31 @@
+<div class="matches-container">
+  <div *ngIf="!matches || matches.length === 0" class="static-message"><p>
+    You don't have any matches yet!
+  </p>
+  <button *ngIf="!showUserSearch" class="link-button mb-btn-secondary" (click)="openSearch()">Start a New Match</button>
+</div>
+
+  <div *ngIf="matches && matches.length > 0" class="match-list">
+    <div class="match" [ngClass]="{'depressed-tertiary': match.id === matchService.getMatch().id}" *ngFor="let match of matches" (click)="goToGame(match)">
+        <p>
+          You vs. {{match.opponent.firstName}}
+        </p>
+        <fa-icon [icon]="chevronRight"></fa-icon>
+    </div>
+    <button *ngIf="!showUserSearch" class="link-button mb-btn-secondary" (click)="openSearch()">Start a New Match</button>
+  </div>
+
+  <!-- New Match Search -->
+  <input autofocus *ngIf="showUserSearch" placeholder="Find a person by name or email" (keyup)="search()" type="text" [(ngModel)]="searchTerms" />
+  <div class="mb-list" *ngIf="showUserSearch && allUsersDisplay && allUsersDisplay.length > 0">
+
+    <div class="mb-list-item" *ngFor="let player of allUsersDisplay">
+      <div class="player-info">
+        <p>{{player.firstName}} {{player.lastName}}</p>
+        <p class="email">{{player.email}}</p>
+      </div>
+      <button class="mb-btn-primary" (click)="startMatch(player.email)">Start!</button>
+    </div>
+  </div>
+
+</div>

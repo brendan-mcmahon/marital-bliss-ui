@@ -1,0 +1,104 @@
+@import "../variables.scss";
+
+.matches-container{
+  // background-color: $dark-blue;
+  color: black;
+}
+
+.static-message {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.match-list {
+  margin: 16px;
+  padding: 8px;
+  .match {
+    padding: 8px;
+    padding-bottom: 12px;
+    font-size: 1.25em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 2px black;
+    p {
+      margin:0;
+    }
+  }
+  .selected {
+    background-color: $blue;
+    color: white;
+  }
+  button {
+    margin-top: 16px;
+  }
+}
+
+.static-message {
+  margin-bottom: 16px;
+}
+
+input {
+  width: 90%;
+  color: black;
+  margin: 8px;
+}
+
+.mb-list {
+  // background-color: $blue;
+  // color: black;
+  color: white;
+  .mb-list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    align-items: center;
+    font-size: 1.25em;
+    .player-info {
+      text-align: left;
+      .email {
+        font-size: .7em;
+        max-width: 37vw;
+        overflow: hidden;
+      }
+    }
+    p {
+      margin: 0;
+    }
+  }
+}
+
+.user-search {
+  margin: 16px;
+  background-color: $pale-yellow;
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  border: solid black 2px;
+  :nth-child(1) {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+  :last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  :nth-child(2n) {
+    background-color: lightgrey;
+    color: black;
+  }
+  .search-result {
+    padding: 8px;
+    font-size: 1.25em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    p {
+      margin: 0;
+    }
+    hr {
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+  }
+}

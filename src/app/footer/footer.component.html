@@ -1,0 +1,6 @@
+<div *ngIf="displayFooter" class="container">
+  <button  [class.active-route]="activeRoute === 'Game'" class="button-foot" (click)="navigateTo('Game')"><img src="../../assets/icons/hand-icon.svg" alt="hand"></button>
+  <button  [class.active-route]="activeRoute === 'Guess'" class="button-foot" (click)="navigateTo('Guess')"><img src="../../assets/icons/guess-icon.svg" alt="guess"></button>
+  <button  [class.active-route]="activeRoute === 'Rewards'" class="button-foot" (click)="navigateTo('Rewards')"><img src="../../assets/icons/reward-icon.svg" alt="reward"></button>
+  <button  [class.active-route]="activeRoute === 'Deck'" class="button-foot" (click)="navigateTo('Deck')"><img src="../../assets/icons/deck-icon.svg" alt="deck"></button>
+</div>

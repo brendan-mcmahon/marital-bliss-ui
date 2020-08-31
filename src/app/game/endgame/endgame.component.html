@@ -1,25 +1,20 @@
-<h1 *ngIf="win">You won!</h1>
-<h1 *ngIf="!win">You lost!</h1>
-<a routerLink="/Home">Home</a>
+<div class="section">
+  <div *ngIf="loading"><h2>
+    loading...
+  </h2></div>
+  <div *ngIf="!loading">
+    <!-- <div class="page-header">
+      <h2 *ngIf="win">You won!</h2>
+      <h2 *ngIf="!win">You lost!</h2>
+    </div> -->
 
-<div class="card-container">
-  <div class="player-one-cards">
-    <h2>{{matchService.match.player.firstName}}'s Cards</h2>
-    <div *ngFor="let card of matchService.match.currentGame.playerOneHand">
-      {{card.title}}
-      {{card.pointvalue}}
-      {{card.status}}</div>
-    </div>
-    <h3>{{playerOnePoints}}</h3>
+  <app-end-game-summary [player]="matchService.player$.getValue()" [points]="summary.playerOnePoints" [hand]="matchService.getGame().playerOneHand" [guesses]="summary.playerOneGuesses"></app-end-game-summary>
 
-    <h2>{{matchService.match.opponent.firstName}}'s Cards</h2>
-    <div class="player-two-cards">
-      <div *ngFor="let card of matchService.match.currentGame.playerTwoHand">
-        {{card.title}}
-        {{card.pointvalue}}
-        {{card.status}}</div>
-      </div>
-    <h3>{{playerTwoPoints}}</h3>
+  <app-end-game-summary [player]="matchService.getOpponent()" [points]="summary.playerTwoPoints" [hand]="matchService.getGame().playerTwoHand" [guesses]="summary.playerTwoGuesses"></app-end-game-summary>
+
+  <h4 class="page-header" *ngIf="win">This is what {{matchService.getOpponent().firstName}} owes you!</h4>
+  <h4 class="page-header" *ngIf="!win">This is what you owe {{matchService.getOpponent().firstName}}!</h4>
+  <app-reward-card [buttonPhase]="'view'" [reward]="winnerReward"></app-reward-card>
+
+  <button class="mb-btn-secondary" (click)="startNewGame()">Start a new Round!</button></div>
 </div>
-
-<button (click)="startNewGame()">Start a new Round!</button>

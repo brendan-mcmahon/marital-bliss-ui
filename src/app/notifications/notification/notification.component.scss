@@ -1,0 +1,67 @@
+@import "../../variables.scss";
+
+.notification-container {
+  border-radius: 8px;
+  padding: 8px;
+  padding: 0px;
+  background-color: $pale-yellow;
+  color: black;
+  max-height:90vh;
+  overflow: scroll;
+}
+
+
+.modal-title {
+  .notification-date {
+    margin-bottom: 0;
+    font-size: .8em;
+    // color: white;
+  }
+  h4 {
+    margin-bottom: 8px;
+    font-size: 1.5em;
+  }
+}
+
+.mb-list {
+  text-align: left;
+  .mb-list-item {
+    text-align: left;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $blue;
+  border-bottom: solid $darkest-blue 2px;
+}
+
+.modal-body {
+  font-size: 1.1em;
+  // padding: 16px;
+  display: flex;
+  flex-direction: column;
+  .edit-buttons {
+    align-self: center;
+  }
+}
+
+.close-button {
+  height: 40px;
+  width: 40px;
+  font-size: 3em;
+  color: white;
+  background: none;
+  display: flex;
+  justify-content: center;
+  background-color: $red;
+  align-self: flex-start;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}

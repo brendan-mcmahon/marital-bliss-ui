@@ -1,11 +1,38 @@
-.pending {
-  background-color: yellow;
+@import "../../variables.scss";
+
+.delivery-date {
+  margin: 8px 16px;
+  display: flex;
+  p {
+    color: white;
+    border-radius: 16px;
+    padding: 4px 12px;
+  }
+  .delivered {
+    background-color: $blue;
+    span {
+      font-weight: bolder;
+    }
+  }
+  .undelivered {
+    background-color: $red;
+  }
 }
 
-.rejected {
-  background-color: red;
-}
-
-.accepted {
-  background-color: greenyellow;
+.button-group {
+  p {
+    background-color: $blue;
+    color: white;
+    border-radius: 16px;
+    padding: 4px 12px;
+  }
+  .delivered {
+    background-color: $blue;
+    span {
+      font-weight: bolder;
+    }
+  }
+  .undelivered {
+    background-color: $red;
+  }
 }

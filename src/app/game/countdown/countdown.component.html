@@ -1,0 +1,25 @@
+<div class="clock-container">
+<h4>Time Remaining:</h4>
+<div class="clock" *ngIf="clock">
+  <div class="segment">
+    <label>Days</label>
+    <span>{{clock.days}}</span>
+  </div>
+
+  <div class="segment">
+    <label>Hours</label>
+    <span>{{clock.hours}}</span>
+  </div>
+
+  <div class="segment">
+    <label>Minutes</label>
+    <span>{{clock.minutes}}</span>
+  </div>
+
+  <div class="segment">
+    <label>Seconds</label>
+    <span>{{clock.seconds}}</span>
+  </div>
+</div>
+<button [disabled]="!enableEndGameButton" class="mb-btn-secondary" (click)="endGame()">{{ !enableEndGameButton ? 'End Game Request submitted' : 'End Game Early' }}</button>
+</div>

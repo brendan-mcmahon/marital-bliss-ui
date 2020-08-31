@@ -1,0 +1,36 @@
+<div class="notification-container">
+
+  <div class="modal-header">
+    <div class="modal-title pull-left">
+      <h4>{{notification.body}}</h4>
+      <p class="notification-date">{{notification.createdOn | date}}</p>
+    </div>
+    <button type="button" class="mb-btn-secondary close-button" aria-label="Close" (click)="close()"><span>&times;</span></button>
+  </div>
+
+  <div class="modal-body">
+      <p *ngIf="stage === 'approve'" >
+        Do you accept?
+      </p>
+
+      <div *ngIf="showBeforeAndAfter()" class="edit-buttons">
+        <button class="btn-tertiary" [ngClass]="{'depressed-tertiary': before }" (click)="toggleEditView()">Original</button>
+        <button class="btn-tertiary" [ngClass]="{'depressed-tertiary': !before }" (click)="toggleEditView()">Edited</button>
+      </div>
+
+      <app-mission-card *ngIf="mission && before" [card]="mission" [buttonPhase]="'approve'"></app-mission-card>
+      <app-mission-card *ngIf="newMission && !before" [card]="newMission" [buttonPhase]="'approve'"></app-mission-card>
+
+      <app-reward-card *ngIf="reward && before" [reward]="reward" [buttonPhase]="'approve'"></app-reward-card>
+      <app-reward-card *ngIf="reward && !before" [reward]="newReward" [buttonPhase]="'approve'"></app-reward-card>
+
+      <div *ngIf="stage === 'approve'" class="button-group">
+        <button type="button" class="mb-btn-primary accept-button" (click)="accept()">Accept</button>
+        <button type="button" class="mb-btn-secondary deny-button" (click)="reject()">Decline</button>
+      </div>
+
+      <div *ngIf="stage === 'acknowledge'" class="button-group">
+        <button type="button" class="mb-btn-primary accept-button" (click)="acknowledge()">Ok</button>
+      </div>
+  </div>
+</div>

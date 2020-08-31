@@ -1,0 +1,76 @@
+<form (ngSubmit)="onSubmit()" #missionForm="ngForm" class="card-container">
+  <div class="card-header">
+    <div class="title mb-form-group">
+      <label for="Title">Title</label>
+      <input
+        appFocus
+        type="text"
+        class="form-control"
+        id="title"
+        [(ngModel)]="mission.title"
+        name="title"
+        autocomplete="off"
+        required
+      />
+    </div>
+
+    <div class="points mb-form-group">
+      <label for="PointValue">Points</label>
+      <input
+        type="number"
+        class="form-control"
+        id="pointValue"
+        [(ngModel)]="mission.pointvalue"
+        name="pointValue"
+        autocomplete="off"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="card-body-inner">
+      <div class="mb-form-group description">
+        <label for="Description">Description</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="description"
+          [(ngModel)]="mission.description"
+          name="description"
+          required
+        ></textarea>
+      </div>
+
+      <div class="mb-form-group brownie-point">
+        <label for="BrowniePoint">Brownie Point</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="browniePoint"
+          [(ngModel)]="mission.browniepoint"
+          name="browniepoint"
+          required
+        ></textarea>
+      </div>
+
+      <!-- <div class="mb-form-group">
+        <label for="BrowniePointValue">Brownie Points</label>
+        <input
+          type="number"
+          class="form-control"
+          id="browniePointValue"
+          [(ngModel)]="mission.browniepointvalue"
+          name="pointValue"
+          required
+        />
+      </div> -->
+
+    </div>
+    <div class="button-group">
+      <button type="submit" class="mb-btn-primary" [disabled]="!missionForm.form.valid">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>

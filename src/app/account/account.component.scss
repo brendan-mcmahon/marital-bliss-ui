@@ -1,0 +1,54 @@
+@import "../variables.scss";
+
+.account-details {
+  // background: $dark-blue;
+  // border: solid $darkest-blue 2px;
+  margin: 16px;
+  padding: 8px;
+  border-radius: 8px;
+  color: black;
+  .field {
+    // padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    p {
+      font-size: 1.1em;
+      margin: 0;
+      font-weight: bold;
+      max-width: 50vw;
+      overflow: hidden;
+    }
+    .edit {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      label {
+        align-self: start;
+        font-weight: 100;
+        font-size: .7em;
+      }
+      input {
+        width: 100%;
+        color: black;
+      }
+      .button-group {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        button {
+          padding: 0 30px;
+        }
+      }
+    }
+    button {
+      padding: 0 16px;
+    }
+  }
+}
+
+fa-icon {
+  font-size: 1.5em;
+}

@@ -1,0 +1,151 @@
+@import "../variables.scss";
+
+.card-container {
+  border-radius: 8px;
+  margin: 16px;
+  text-align: left;
+  background-color: white;
+  max-width: 700px;
+  color: black;
+  box-shadow: 0px 10px 8px 1px rgba(0, 0, 0, 0.503);
+  box-shadow: 0px 10px 8px 7px rgba(0, 0, 0, .5);
+  padding: 0;
+  border: none;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 8px;
+
+  background-color: $pale-yellow;
+  color: $red;
+  border-bottom: 3px solid $dark-red;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.card-body {
+  padding: 8px;
+
+  .image {
+    height: 200px;
+    background-color: white;
+    border: solid black 2px;
+    margin-bottom: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .card-body-inner {
+    border: solid black 2px;
+    background-color: white;
+    margin-bottom: 8px;
+    margin-left: 16px;
+    margin-right: 16px;
+
+    .description {
+      padding: 8px;
+      p {
+        font-size: 1.2em;
+      }
+    }
+    h4 {
+      font-size: 1.25em;
+    }
+    .brownie-point {
+      background-color: $blue;
+      // color: white;
+      border: solid $dark-blue 2px;
+      border-radius: 8px;
+      margin: 8px;
+      padding: 4px;
+
+      // color: white;
+      // background-color: rgb(110, 55, 3);
+      // border: solid 2px rgb(68, 33, 1);
+    }
+  }
+}
+
+h5, h4, p {
+  margin: 0;
+  padding: 4px;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.points {
+  // padding: 6px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  // margin: 3px;
+}
+
+.label {
+  font-size: .8em;
+}
+
+.number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  border: solid $dark-red 2px;
+  border-radius: 4px;
+  height: 45px;
+  width: 45px;
+  font-family: small-header;
+  background-color: $red;
+  color: $pale-yellow;
+  margin-left: 4px;
+}
+
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 16px;
+}
+
+.pending {
+  // border-color: #ffe100;
+  background-color: $yellow;
+  // background: linear-gradient(0deg, rgba(250,255,131,1) 0%, rgba(255,255,255,1) 70%);
+  // .card-header {
+  //   background-color: $pale-yellow;
+  //   color: $dark-red;
+  // }
+}
+
+.rejected {
+  // border-color: #c82f2f;
+  background-color: $red;
+  // h4 {
+  //   color: white;
+  // }
+  // background: radial-gradient(circle at bottom left, rgba(255,131,131,1) 0%, rgba(255,255,255,1) 70%);
+  // .card-header {
+  //   background-color: $red;
+  //   color: $pale-yellow;
+  // }
+}
+
+.accepted {
+  // border-color: #00df6c;
+  background-color: $blue;
+  // h4 {
+  //   color: white;
+  // }
+  // background: radial-gradient(circle at bottom right, rgba(136,255,131,1) 0%, rgba(255,255,255,1) 70%)
+  // .card-header {
+  //   background-color: $dark-blue;
+  //   color: white;
+  // }
+}

@@ -1,0 +1,35 @@
+@import "../../variables.scss";
+// @import "../../../styles.scss";
+// why the fuck won't this work??
+
+.clock-container {
+  display: flex;
+  flex-direction: column;
+  background-color: $dark-blue;
+  padding: 8px;
+  border-radius: 8px;
+  border: solid darken($dark-blue, 30) 2px;
+  margin: 16px;
+  .clock {
+    display: flex;
+    justify-content: space-between;
+    background-color: $pale-yellow;
+    padding-left: 8px;
+    padding-right: 8px;
+    color: $dark-red;
+    font-weight: bold;
+    label {
+      font-weight:50;
+      font-size: .7em;
+      margin-bottom: 0px;
+    }
+    span {
+      font-size: 1.2em;
+      // font-family: header;
+    }
+  }
+  button {
+    margin: 8px;
+    align-self: flex-end;
+  }
+}

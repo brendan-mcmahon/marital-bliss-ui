@@ -1,23 +1,37 @@
-<div *ngIf="loading"><h1>loading game...</h1></div>
+<app-loading *ngIf="loading"></app-loading>
 
-<button (click)="newGame()" *ngIf="!matchService.match.currentGame">Start New Game</button>
+<div *ngIf="!matchService.match.currentGame" class="section">
+  <button class="mb-btn-secondary" (click)="newGame()">Start New Game</button>
+</div>
 
-<div *ngIf="matchService.match.currentGame">
-  <button *ngIf="!matchService.match.currentGame.playerOneReady" [disabled]="!readyToStart()" (click)="startGame()">Start Game</button>
-  <p *ngIf="matchService.match.currentGame.status === 'pending' && matchService.match.currentGame.playerOneReady">Waiting for your partner to start.</p>
-  <p *ngIf="matchService.match.currentGame.status === 'pending' && !matchService.match.currentGame.playerOneReady">Your partner is waiting for you!</p>
-  <p *ngIf="matchService.match.currentGame.status === 'in progress'" >Game in progress!</p>
-  <a routerLink="/Home">Home</a>
-  <h1>Your game with {{matchService.getMatch().opponent.firstName}}</h1>
-  <h3>Game Ends: {{matchService.match.currentGame.endOfGame | date}}</h3>
-  <h2>Hand</h2>
-  <button *ngIf="!matchService.match.currentGame.playerOneReady" (click)="acceptAll()">Accept all missions!</button>
-  <p *ngIf="matchService.match.currentGame.status !== 'in progress' && !matchService.match.currentGame.playerOneReady">Accept or Reject as many as you want! You will not replace the ones you reject, but you won't lose points for not completing them at the end of the week.</p>
-  <app-mission-card *ngFor="let card of matchService.match.currentGame.playerOneHand; let i = index" [card]="card" [editable]="!matchService.match.currentGame.playerOneReady" (cardStatusUpdated)="updateMissionStatus($event, i)"></app-mission-card>
+<div class="section" *ngIf="matchService.match.currentGame">
 
-  <h2>Rewards</h2>
-  <p *ngIf="matchService.match.currentGame.status !== 'in progress' && !matchService.match.currentGame.playerOneReady">You can only pick one of these, so choose carefully!</p>
-  <app-reward-card *ngFor="let reward of matchService.match.currentGame.playerOneRewards; let i = index" [reward]="reward" [editable]="!matchService.match.currentGame.playerOneReady" (rewardStatusUpdated)="updateRewardStatus($event, i)"></app-reward-card>
+  <button class="mb-btn-secondary" *ngIf="!matchService.match.currentGame.playerOneReady" [disabled]="!readyToStart()" (click)="startGame()">Start</button>
 
-  <a href="/Guess">Make a guess!</a>
+  <app-countdown (endGameTrigger)="endGame()" *ngIf="matchService.match.currentGame.status === 'in progress'" [from]="matchService.getGame().endOfGame"></app-countdown>
+
+  <p class="static-message" *ngIf="matchService.match.currentGame.status === 'pending' && matchService.match.currentGame.playerOneReady">Waiting for your partner to start.</p>
+  <p class="static-message" *ngIf="matchService.match.currentGame.status === 'pending' && !matchService.match.currentGame.playerOneReady">Your partner is waiting for you!</p>
+
+  <div *ngIf="matchService.match.currentGame.status !== 'in progress' && !matchService.match.currentGame.playerOneReady" class="sub-header">
+    <h4>Choose your missions!</h4>
+    <p>
+      Accept or Reject as many as you want! You will not replace the ones you reject,
+      but you won't lose points for not completing them at the end of the week.
+    </p>
+  </div>
+    <button class="mb-btn-secondary" *ngIf="!matchService.match.currentGame.playerOneReady" (click)="acceptAll()">Accept all missions!</button>
+
+  <h4 class="title" *ngIf="matchService.getGame().status === 'in progress' || matchService.match.currentGame.playerOneReady">Your Missions:</h4>
+  <app-mission-card *ngFor="let card of matchService.match.currentGame.playerOneHand; let i = index" [card]="card" [buttonPhase]="matchService.match.currentGame.playerOneReady ? matchService.getGame().status === 'in progress' ? 'play' : 'waiting-opponent' : 'pending'" (cardStatusUpdated)="updateMissionStatus($event, i)"></app-mission-card>
+
+  <div *ngIf="matchService.match.currentGame.status !== 'in progress' && !matchService.match.currentGame.playerOneReady" class="sub-header">
+    <h4>Choose your rewards!</h4>
+    <p>You can only pick one of these, so choose carefully!</p>
+  </div>
+  <h4 class="title" *ngIf="matchService.getGame().status === 'in progress' || matchService.match.currentGame.playerOneReady">What you're playing for:</h4>
+  <app-reward-card *ngFor="let reward of matchService.match.currentGame.playerOneRewards; let i = index" [reward]="reward" [buttonPhase]="matchService.match.currentGame.playerOneReady ? 'waiting-opponent' : 'pending'" (rewardStatusUpdated)="updateRewardStatus(i)"></app-reward-card>
+
+  <button class="mb-btn-secondary" *ngIf="!matchService.match.currentGame.playerOneReady" [disabled]="!readyToStart()" (click)="startGame()">Start</button>
+
 </div>

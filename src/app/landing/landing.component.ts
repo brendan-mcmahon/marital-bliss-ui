@@ -22,15 +22,18 @@ export class LandingComponent implements OnInit {
     private authService: AuthService) {}
 
   ngOnInit() {
-    if (this.authService.isLoggedIn()) {
-      this.apiService.getAllMatches().subscribe(m => {
-        this.matchService.setMatch(m[0]);
-        console.log('logging in automatically.');
-        this.router.navigate(['Game']);
-      });
-      } else {
-        console.log('user must sign in to obtain token');
+    this.authService.isLoggedIn$.subscribe(
+      // this should be an if/then and we should show a loading screen until we know one way or the other
+      isLoggedIn => {
+        if(isLoggedIn) {
+          this.apiService.getAllMatches().subscribe(m => {
+            this.matchService.setMatch(m[0]);
+            console.log('logging in automatically.');
+            this.router.navigate(['Game']);
+          });
+        }
       }
+    );
   }
 
   showForm(form: string) {

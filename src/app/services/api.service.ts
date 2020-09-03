@@ -17,7 +17,8 @@ import { EndGameSummary } from '../models/EndGameSummary';
 })
 export class ApiService {
 
-  baseUrl = 'https://localhost:3001';
+  // baseUrl = 'http://localhost:3001';
+  baseUrl = 'http://marital-bliss-api.herokuapp.com';
 
   constructor(private http: HttpClient, private router: Router) { }
 

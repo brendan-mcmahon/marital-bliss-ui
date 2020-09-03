@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { MatchService } from '../services/match.service';
@@ -11,7 +11,7 @@ import { GesturesService } from '../services/gestures.service';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit, OnDestroy {
+export class GameComponent implements OnInit {
 
   displayStatus = 'new';
   timeRemaining: number;
@@ -24,10 +24,6 @@ export class GameComponent implements OnInit, OnDestroy {
     private apiService: ApiService,
     private modalService: BsModalService,
     private gestureService: GesturesService) { }
-
-  ngOnDestroy(): void {
-    this.matchService.match$.unsubscribe();
-  }
 
   ngOnInit() {
     this.matchService.match$.refreshAndSubscribe(m => {

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --ssl --ssl-key C:\\Users\\Brendan.McMahon\\code\\marital-bliss-ui\\localhost.key --ssl-cert C:\\Users\\Brendan.McMahon\\code\\marital-bliss-ui\\localhost.crt",
+    "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

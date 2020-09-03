@@ -19,21 +19,27 @@ export class MatchService {
   public matches: Match[];
   public match: Match;
   public matches$ = new RefreshingSubject<Match[]>(null, () => this.apiService.getAllMatches());
-  // public match$ = new BehaviorSubject<number>(null);
   public match$ = new RefreshingSubject<Match>(null, () => this.getMatchOb());
   public player$ = new BehaviorSubject<Player>(null);
-  public missionDeck$ = new RefreshingSubject<Card[]>(null, () => this.apiService.getMissionDeck(this.getMatch().id));
-  public rewardDeck$ = new RefreshingSubject<Reward[]>(null, () => this.apiService.getRewardDeck(this.getMatch().id));
+  public missionDeck$ = new RefreshingSubject<Card[]>(null, () => this.getMissionDeck());
+  public rewardDeck$ = new RefreshingSubject<Reward[]>(null, () => this.getRewardDeck());
   public notification$ = new RefreshingSubject<Notification[]>(null, () => this.apiService.getNotifications());
 
   constructor(private router: Router, private authService: AuthService, private apiService: ApiService) {
+    this.match$.refreshAndSubscribe(m => {
+      if (!!m) {
+        this.missionDeck$.refresh();
+        this.rewardDeck$.refresh();
+      }
+    });
+
     this.authService.isLoggedIn$.subscribe(loggedIn => {
       console.log(`isLoggedIn$ Update: ${loggedIn === true}`);
       if (loggedIn === true) {
         this.authService.loggedInUser$.refreshAndSubscribe(u => this.player$.next(u));
         this.match$.next(null);
-        this.missionDeck$.refresh();
-        this.rewardDeck$.refresh();
+        // this.missionDeck$.refresh();
+        // this.rewardDeck$.refresh();
         this.notification$.refresh();
         this.matches$.refresh();
         console.log(`logged in and refreshed`);
@@ -100,11 +106,12 @@ export class MatchService {
     localStorage.setItem('currentMatch', JSON.stringify(this.match));
   }
 
-  private getMissionDeck() {
-    this.apiService.getMissionDeck(this.getMatch().id)
-      .subscribe(d => {
-        this.missionDeck$.next(d);
-      });
+  private getMissionDeck(): Observable<Card[]> {
+    return this.apiService.getMissionDeck(this.match$.value.id);
+  }
+
+  private getRewardDeck(): Observable<Reward[]> {
+    return this.apiService.getRewardDeck(this.match$.value.id);
   }
 
 }

@@ -6,7 +6,7 @@
 </div>
 
   <div *ngIf="matches && matches.length > 0" class="match-list">
-    <div class="match" [ngClass]="{'depressed-tertiary': match.id === matchService.getMatch().id}" *ngFor="let match of matches" (click)="goToGame(match)">
+    <div class="match" [ngClass]="{'depressed-tertiary': !!matchService.match$.value && match.id === matchService.match$.value.id}" *ngFor="let match of matches" (click)="goToGame(match)">
         <p>
           You vs. {{match.opponent.firstName}}
         </p>

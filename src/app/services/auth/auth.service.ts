@@ -14,7 +14,7 @@ import { RefreshingSubject } from 'src/app/RefreshingSubject';
 })
 export class AuthService {
 
-  baseUrl = 'http://marital-bliss-api.herokuapp.com/account';
+  baseUrl = 'https://marital-bliss-api.herokuapp.com/account';
   loggedInUser$ = new RefreshingSubject<Player>(null, () => this.apiService.getUser());
   public isLoggedIn$ = new BehaviorSubject<boolean>(false);
 

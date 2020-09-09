@@ -34,24 +34,18 @@ export class MatchService {
     });
 
     this.authService.isLoggedIn$.subscribe(loggedIn => {
-      console.log(`isLoggedIn$ Update: ${loggedIn === true}`);
       if (loggedIn === true) {
         this.authService.loggedInUser$.refreshAndSubscribe(u => this.player$.next(u));
         this.match$.next(null);
-        // this.missionDeck$.refresh();
-        // this.rewardDeck$.refresh();
         this.notification$.refresh();
         this.matches$.refresh();
-        console.log(`logged in and refreshed`);
       } else {
-        console.log('logged out!!!!');
         this.match$.next(null);
         this.player$.next(null);
         this.missionDeck$.next([]);
         this.rewardDeck$.next([]);
         this.notification$.next([]);
         this.matches$.next([]);
-        console.log(`I JUST FUCKING LOGGED OUT SO THIS SHOULD BE NULL: match id: ${JSON.stringify(this.match$.value)}`);
       }
     });
   }

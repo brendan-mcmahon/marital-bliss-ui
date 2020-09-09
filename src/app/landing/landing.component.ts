@@ -25,7 +25,7 @@ export class LandingComponent implements OnInit {
     this.authService.isLoggedIn$.subscribe(
       // this should be an if/then and we should show a loading screen until we know one way or the other
       isLoggedIn => {
-        if(isLoggedIn) {
+        if (isLoggedIn) {
           this.apiService.getAllMatches().subscribe(m => {
             this.matchService.setMatch(m[0]);
             console.log('logging in automatically.');

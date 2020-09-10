@@ -1,13 +1,14 @@
 //Install express server
 const express = require('express');
 const path = require('path');
-const sslRedirect = require('heroku-ssl-redirect');
+import sslRedirect from 'heroku-ssl-redirect';
 
 const compression = require('compression');
 const app = express();
 
-app.use(compression());
 app.use(sslRedirect());
+
+app.use(compression());
 // Serve only the static files form the dist directory
 app.use(express.static(__dirname + '/dist/marital-bliss-ui'));
 

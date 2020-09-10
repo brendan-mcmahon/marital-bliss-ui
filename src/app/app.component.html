@@ -1,8 +1,8 @@
-<div class="gesture-container" (swipedown)="onSwipeDown($event)" (swipeleft)="onSwipeLeft($event)" (swiperight)="onSwipeRight($event)">
+<!-- <div class="gesture-container" (swipedown)="onSwipeDown($event)" (swipeleft)="onSwipeLeft($event)" (swiperight)="onSwipeRight($event)"> -->
   <app-menu *ngIf="loggedIn"></app-menu>
 
   <div *ngIf="!hasMatch && loggedIn" class="static-message">You don't have any matches yet! Open the menu to look for other players to start playing with.</div>
 
   <router-outlet *ngIf="hasMatch || !loggedIn"></router-outlet>
   <app-footer class="footer"></app-footer>
-</div>
+<!-- </div> -->

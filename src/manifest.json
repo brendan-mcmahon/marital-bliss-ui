@@ -46,7 +46,7 @@
       "src": "assets/icons/maskable_icon.png",
       "sizes": "766x766",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ]
 }

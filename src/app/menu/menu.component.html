@@ -20,6 +20,17 @@
   </div>
 
   <div class="menu-items">
+
+    <div class="menu-item" [ngStyle]="{ 'padding-bottom': showHowToPlay ? '8px' : '0px' }">
+      <div (click)="toggleShowHowToPlay()" class="action-item" [ngStyle]="{ 'border-radius': showHowToPlay ? '8px 8px 0px 0px' : '8px' }">
+        <fa-icon [icon]="question"></fa-icon>
+        <p>How To Play</p>
+        <fa-icon class="chevron" *ngIf="!showHowToPlay" [icon]="chevronDown"></fa-icon>
+        <fa-icon class="chevron"  *ngIf="showHowToPlay" [icon]="chevronUp"></fa-icon>
+      </div>
+      <app-how-to-play *ngIf="showHowToPlay"></app-how-to-play>
+    </div>
+
     <div class="menu-item" [ngStyle]="{ 'padding-bottom': showMatches ? '8px' : '0px' }">
       <div (click)="toggleShowMatches()" class="action-item" [ngStyle]="{ 'border-radius': showMatches ? '8px 8px 0px 0px' : '8px' }">
         <fa-icon [icon]="people"></fa-icon>

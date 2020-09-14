@@ -47,6 +47,7 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
 import { FireworksComponent } from './fireworks/fireworks.component';
 import { ForgotPasswordComponent } from './landing/forgot-password/forgot-password.component';
 import { FocusDirective } from './focus.directive';
+import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = {
@@ -90,6 +91,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     FireworksComponent,
     ForgotPasswordComponent,
     FocusDirective,
+    HowToPlayComponent,
   ],
   imports: [
     BrowserModule,

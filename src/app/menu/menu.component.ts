@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 // tslint:disable-next-line:max-line-length
-import { faBars, faTimes, faChevronDown, faChevronUp, faChevronRight, faUsers, faUser, faBell, faBug } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes, faChevronDown, faChevronUp, faChevronRight, faUsers, faUser, faBell, faBug, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { MatchService } from '../services/match.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
@@ -21,10 +21,12 @@ export class MenuComponent implements OnInit {
   person = faUser;
   bell = faBell;
   bug = faBug;
+  question = faQuestion;
   notificationCount: number;
   playerName: string;
 
   hasMatch = false;
+  showHowToPlay = false;
   showMenu = false;
   showMatches = false;
   showAccount = false;
@@ -60,6 +62,16 @@ export class MenuComponent implements OnInit {
     this.showAccount = false;
     this.showNotifications = false;
     this.showBugReport = false;
+    this.showHowToPlay = false;
+  }
+
+  toggleShowHowToPlay() {
+    this.showHowToPlay = !this.showHowToPlay;
+    this.showMatches = false;
+    this.showAccount = false;
+    this.showNotifications = false;
+    this.showBugReport = false;
+
   }
 
   toggleShowMatches() {
@@ -67,6 +79,7 @@ export class MenuComponent implements OnInit {
     this.showAccount = false;
     this.showNotifications = false;
     this.showBugReport = false;
+    this.showHowToPlay = false;
   }
 
   toggleShowNotifications() {
@@ -74,6 +87,7 @@ export class MenuComponent implements OnInit {
     this.showMatches = false;
     this.showAccount = false;
     this.showBugReport = false;
+    this.showHowToPlay = false;
   }
 
   toggleShowAccount() {
@@ -81,6 +95,7 @@ export class MenuComponent implements OnInit {
     this.showMatches = false;
     this.showNotifications = false;
     this.showBugReport = false;
+    this.showHowToPlay = false;
   }
 
   toggleShowBugReport() {
@@ -88,6 +103,7 @@ export class MenuComponent implements OnInit {
     this.showMatches = false;
     this.showAccount = false;
     this.showNotifications = false;
+    this.showHowToPlay = false;
   }
 
   navigateTo(route: string) {
